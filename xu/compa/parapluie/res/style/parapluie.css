@@ -1,0 +1,326 @@
+QWidget {
+    background: #f8f4f5;
+    border: none;
+    outline: none;
+}
+
+QToolBar {
+    background: #4a70b6;
+    min-width: 48px;
+    border: none;
+    /*border-right: 1px solid #ddd;*/
+    outline: none;
+    spacing: 5px
+}
+
+QToolBar QWidget {
+    background: transparent;
+}
+
+QToolButton {
+    background: transparent;
+    height: 48px;
+    width: 48px;
+}
+
+QToolButton:hover,
+QToolButton:pressed,
+QToolButton:selected {
+    background: #bbc6e6;
+    border: none;
+}
+
+QToolButton::menu-indicator {
+    image: none;
+}
+
+QMenu {
+    background-color: #FFFFFF;
+    color: #424242;
+    margin: 4px;
+    border-radius: 2px;
+}
+
+QMenu::separator {
+    height: 1px;
+    background-color: #EEEEEE;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    color: #EEEEEE;
+}
+
+QMenu::icon {
+    margin: 0;
+    padding-left: 8px;
+}
+
+QMenu::item {
+    border-radius: 2px;
+    min-height: 28px;
+    min-width: 80px;
+    background-color: #FFFFFF;
+    padding: 4px 32px 4px 4px;
+}
+
+QMenu::item:selected {
+    background-color: #4a70b6;
+    color: #FFFFFF;
+}
+
+QPushButton {
+    min-width: 80px;
+    max-height: 32px;
+    height: 32px;
+    background: white;
+    margin: 4px 0;
+    padding: 0 8px;
+    color: #A5ABBD;
+    border: 1px solid #ece1dd;
+    border-radius: 15px;
+    width: auto;
+}
+
+QPushButton:hover {
+    color: #f17657;
+    border-color: #e15b3e;
+}
+
+QLineEdit {
+    border-radius: 15px;
+    height: 32px;
+    border: 1px solid #bbc6e6;
+    background: #FFFFFF;
+    padding: 0 8px;
+    font-size: 14px;
+}
+
+QScrollBar:horizontal {
+    height: 8px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin: 0 4px 0 4px;
+}
+
+QScrollBar:vertical {
+    background-color: transparent;
+    width: 8px;
+    border: 1px solid transparent;
+    margin: 4px 0 4px 0;
+}
+
+QScrollBar::add-line:horizontal {
+    border: 1px solid transparent;
+    background-color: transparent;
+}
+
+QScrollBar::add-line:vertical {
+    border: 1px solid transparent;
+    background-color: transparent;
+}
+
+QScrollBar::sub-line:horizontal {
+    border: 1px solid transparent;
+    background-color: transparent;
+}
+
+QScrollBar::sub-line:vertical {
+    border: 1px solid transparent;
+    background-color: transparent;
+}
+
+QScrollBar::handle:horizontal {
+    background-color: #b1bee1;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    min-width: 8px;
+}
+
+QScrollBar::handle:vertical {
+    background-color: #b1bee1;
+    min-height: 8px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: transparent;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: transparent;
+}
+
+QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal {
+    background: none;
+    border: none;
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+    background: none;
+    border: none;
+}
+
+QSpinBox {
+    background: white;
+    border-radius: 5px;
+    /*border: 1px solid #4a70b6;*/
+    max-width: 50px;
+    min-width: 50px;
+    min-height: 32px;
+    padding: 0 4px;
+}
+
+QSpinBox::down-button {
+    border-bottom-right-radius: 5px;
+    background: url(":/icons/keyboard_arrow_down.svg") no-repeat center center 32px 32px;
+    subcontrol-position: bottom right;
+    height: 16px;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+QSpinBox::up-button {
+    border-top-right-radius: 5px;
+    background: url(:/icons/keyboard_arrow_up.svg) no-repeat center center 32px 32px;
+    subcontrol-position: top right;
+    height: 16px;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+/**
+    custom object name
+ */
+
+#Test {
+    background: #424242;
+}
+
+/** the raise flat */
+
+#Raised {
+    background: white;
+    min-width: 30px;
+}
+
+/** sticky box  */
+
+#StickyWindow {
+    border: 1px solid #4a70b6;
+    /*background: #4a70b6;*/
+}
+
+#Alert_Error,
+#Alert_Error QWidget {
+    border: none;
+    background: #e15b3e;
+}
+
+#Alert_Warning,
+#Alert_Warning QWidget {
+    border: none;
+    background: #fdd835;
+    color: #FFFFFF;
+}
+
+#Alert_Information,
+#Alert_Information QWidget {
+    border: none;
+    background: #c5cae9;
+    color: #FFFFFF;
+}
+
+#Alert_Error QLabel,
+#Alert_Warning QLabel,
+#Alert_Information QLabel{
+    color: #FFFFFF;
+}
+
+#Alert_Error #FunctionButton,
+#Alert_Warning #FunctionButton,
+#Alert_Information #FunctionButton,
+#StickyWindow #FunctionButton {
+    background: transparent;
+    height: 32px;
+    width: 32px;
+}
+
+#StickyWindow #ResizeBottom {
+    background-image: url(":/icons/resize-bottom-right.svg");
+    background-size: 10px 10px;
+    background-repeat: no-repeat;
+    /*background: #f17657;*/
+    height: 10px;
+    width: 10px;
+}
+
+/**
+    special button
+ */
+#OptimizeButton {
+    max-height: 32px;
+    background: #4a70b6;
+    margin: 4px 0;
+    padding: 0 8px;
+    color: #FFFFFF;
+    border-radius: 15px;
+    width: auto;
+    border: none;
+}
+
+#OptimizeButton:hover {
+    background: #b1bee1;
+}
+
+#NegativeButton {
+    max-height: 32px;
+    background: #E57373;
+    margin: 4px 0;
+    padding: 0 8px;
+    color: white;
+    border-radius: 15px;
+    width: auto;
+    border: none;
+}
+
+#NegativeButton:hover {
+    background: pink;
+    color: white;
+}
+
+#ColorButton,
+#ColorButton:hover {
+    border: 2px solid white;
+    outline: none;
+    padding: 0;
+    min-width: 24px;
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+}
+
+#ColorButton:checked {
+    border: 3px solid orange;
+}
+
+/**
+    LineEdit with out box
+ */
+#OutlineBox {
+    border-radius: 15px;
+    border: 1px solid #bbc6e6;
+    background: #FFFFFF;
+}
+
+#OutlineBox QLineEdit {
+    border: none;
+    border-radius: 0;
+    height: auto;
+}

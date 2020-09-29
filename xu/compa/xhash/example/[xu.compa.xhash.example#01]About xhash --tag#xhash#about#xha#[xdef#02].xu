@@ -1,0 +1,60 @@
+syntax:
+	[news]Name of news--tag#tag1#tag2#tag3--label#label1
+contruct:
+	news						categories
+		Name of news			name
+			tag					property 1
+				tag1			value 1
+				tag2			value 2
+				tag3			value 3
+			label				property 2
+				label1			value only
+
+example:
+	[news]The Diary--tag#diary#the diary#news#news for to day--author#Albert--date#23-09-2020.txt
+
+	news__the_diary___tag__diary__the_diary__news_for_to_day___author__albert___date__23_09_2020
+
+.xu file:
+	[news--01] The Diary--tag#diary#the diary#news#news for to day--author#Albert--date#23-09-2020
+	[news--02] The Diary part 2--tag#diary#the diary#news#news for to day#part 2--author#Albert--date#23-09-2020
+	[news--03] The Diary import from first line--tag[news-01]--author#Albert--date#24-09-2020
+	[news--04] The Diary with sub --tag#sub--author#Albert--date#25-09-2020--sub#[news-01]
+
+cause:
+	--tag[news-01]
+==   --tag#diary#the diary#news#news for to day
+
+result:
+	[news--03] The Diary import from first line--tag[news-01]--author#Albert--date#24-09-2020
+==	[news--03] The Diary import from first line--tag#diary#the diary#news#news for to day--author#Albert--date#24-09-2020
+
+cause:
+	--sub#[news-01]
+==  	[news--01] The Diary--tag#diary#the diary#news#news for to day--author#Albert--date#23-09-2020
+
+result:
+	[news--04] The Diary with sub --tag#sub--author#Albert--date#25-09-2020--sub#[news-01]
+==	[news--04] The Diary with sub --tag#sub--author#Albert--date#25-09-2020--sub#{[news--01] The Diary--tag#diary#the diary#news#news for to day--author#Albert--date#23-09-2020}  -->brace {} is not in a syntax <--
+
+contruct:
+	news     	04				      \
+		The Diary with sub			|
+			tag						|
+				sub					\
+			author					/ first level
+				Albert				|
+			date					|
+				25-09-2020			|
+			sub					      /
+				news 	01				      \
+					The Diary				|
+						tag					|
+							diary			|
+							the diary		|
+							news			\
+							news for to day	/  second level
+						author				|
+							Albert			|
+						date				|
+							23-09-2020	      /
