@@ -1,13 +1,13 @@
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QToolBar, QWidget, QSizePolicy, QStackedWidget
+from PyQt5.QtWidgets import QToolBar, QWidget, QSizePolicy, QStackedWidget, QAction
 
-import xu.compa.parapluie as Parapluie
 import xu.src.python.Utilities as Util
-import xu.src.python.Window as XWin
-from xu.compa.parapluie.python import StickyWindow
+from xu.compa.Parapluie import PResource, Parapluie, PWindow, PAlert
+from xu.src.python.JsonViewer import JSONViewer
+from xu.src.python.Request.RequestViewer import RequestViewer
 
 
-class MainWindow(StickyWindow.ParapluieWindow):
+class MainWindow(PWindow):
 
     def __init__(self):
         super().__init__()
@@ -17,51 +17,66 @@ class MainWindow(StickyWindow.ParapluieWindow):
         Util.Style.applyWindowIcon(self)
 
         self.stack = QStackedWidget()
+        self.stackList = {}
         self.jsonView = None
+        self.requestView = None
 
         mainToolbar = QToolBar()
         mainToolbar.setMovable(False)
-        mainToolbar.addAction(Parapluie.Resource.invertIcon(Parapluie.Icon_Link_Svg), "Request", self.test)
-        mainToolbar.addAction(Parapluie.Resource.invertIcon(Parapluie.Icon_Document_Json_Svg), "JSON Viewer",
-                              self.showJSONViewer)
+        topWidget = QWidget()
+        topWidget.setFixedHeight(8)
+        mainToolbar.addWidget(topWidget)
+        self.requestAction = mainToolbar.addAction(PResource.invertIcon(Parapluie.Icon_Link_Svg),
+                                                   "Request",
+                                                   self.showRequest)
+        self.requestAction.setCheckable(True)
+        self.jsonAction = mainToolbar.addAction(PResource.invertIcon(Parapluie.Icon_Document_Json_Svg),
+                                                "JSON Viewer",
+                                                self.showJSONViewer)
+        self.jsonAction.setCheckable(True)
 
         stretchWidget = QWidget()
         stretchWidget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         mainToolbar.addWidget(stretchWidget)
-        mainToolbar.addAction(Parapluie.Resource.invertIcon(Parapluie.Icon_Information_Svg), "Information", self.test2)
+        mainToolbar.addAction(PResource.invertIcon(Parapluie.Icon_Information_Svg), "Information")
 
-        mainToolbar.addAction(Parapluie.Resource.invertIcon(Parapluie.Icon_Levels_Svg), "Settings")
+        mainToolbar.addAction(PResource.invertIcon(Parapluie.Icon_Levels_Svg), "Settings")
         self.addToolBar(Qt.LeftToolBarArea, mainToolbar)
 
+        bottomWidget = QWidget()
+        bottomWidget.setFixedHeight(8)
+        mainToolbar.addWidget(bottomWidget)
+
+        self.stack.currentChanged.connect(self.stackChange)
+
         self.setCentralWidget(self.stack)
+        self.setContentsMargins(0, 0, 4, 0)
+
+    def stackChange(self, index: int):
+        for i in self.stackList:
+            w: QAction = self.stackList[i]
+            w.setChecked(i == str(index))
 
     def showJSONViewer(self):
         if self.jsonView is None:
-            self.jsonView = XWin.JSONViewer()
+            self.jsonView = JSONViewer()
+            self.jsonView.alert.connect(self.showAlert)
+            self.stackList[str(self.stack.count())] = self.jsonAction
             self.stack.addWidget(self.jsonView)
 
         self.stack.setCurrentWidget(self.jsonView)
 
-    count = 0
+    def showRequest(self):
+        if self.requestView is None:
+            self.requestView = RequestViewer()
+            self.stackList[str(self.stack.count())] = self.requestAction
+            self.stack.addWidget(self.requestView)
 
-    def test(self):
-        self.count = self.count + 1
-        if self.count % 3 == 0:
-            tpe = Parapluie.Alert_Warning
-        elif self.count % 3 == 1:
-            tpe = Parapluie.Alert_Information
-        else:
-            tpe = Parapluie.Alert_Error
+        self.stack.setCurrentWidget(self.requestView)
 
-        a1 = StickyWindow.Alert(self, tpe)
-        a1.setWindowTitle(str(self.count))
-        a1.setMessage("Hello, this is the", self.count, "mesage test.", sep=" ")
-        if self.count != 3:
-            a1.setAutoClose(5000)
-        self.addAlert(a1)
-
-    def test2(self):
-        self.count = self.count + 1
-        a1 = StickyWindow.MessageBox(self)
-        a1.initInformation("Hello")
-        a1.show()
+    def showAlert(self, text, type, button1=None, button2=None):
+        alert = PAlert(self, type)
+        alert.setMessage(text)
+        if button1 is None and button2 is None:
+            alert.setAutoClose(3000)
+        self.addAlert(alert)

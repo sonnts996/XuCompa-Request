@@ -44,10 +44,13 @@ class XashList:
                 rs.append(x)
         return rs
 
-    def equalName(self, name: str, sensitive: bool = True) -> list:
+    def findEveryWhere(self, category: str, name: str, *tag: str, sensitive: bool = True) -> list:
         rs = []
         for x in self.list:
-            if x.equalName(name, sensitive):
+            c = False if category.isspace() or category == "" else x.findWithCategory(category, sensitive=sensitive)
+            t = False if len(tag) <= 0 else x.findWithTags(*tag, sensitive=sensitive)
+            n = False if name.isspace() or name == "" else x.findWithName(name, sensitive=sensitive)
+            if c or n or t:
                 rs.append(x)
         return rs
 
@@ -70,3 +73,16 @@ class XashList:
             if x.findWithId(categories):
                 rs.append(x)
         return rs
+
+    def extract(self, category_id: str, pro: str) -> list:
+        x: xhash.Xash = self.xdef.get(category_id)
+        if x is None:
+            return []
+        else:
+            for i in x.tag:
+                if i == pro:
+                    return x.tag[i]
+
+    def clear(self):
+        self.list.clear()
+        self.xdef.clear()

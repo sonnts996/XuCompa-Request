@@ -19,7 +19,7 @@ class Xash:
 
         self.folder = folder  # for matching when return
         self.ext = ext
-        self.categories = None
+        self.categories: XashCategory = None
         self.name = None
         self.tag = {}
 
@@ -84,45 +84,48 @@ class Xash:
         }
 
     def findWithTag(self, pro: str, value, sensitive: bool = True, xdef: xhash.XashDef = None) -> bool:
+        if pro == "" or value == "":
+            return True
+
         rs = False
         if sensitive:
             for t in self.tag:
                 if t.lower() == pro.lower():
                     for s in self.tag[t]:
                         if xdef is not None and re.search(self.category_pattern, s) is not None:
-                            rs = rs or xdef.find(s, pro, value)
+                            rs = rs or xdef.find(s, pro, value, True)
                         else:
-                            rs = rs or value.lower() == s.lower()
+                            rs = rs or value.lower() in s.lower()
         else:
             for t in self.tag:
-                if t == pro:
+                if t.lower() == pro.lower():
                     for s in self.tag[t]:
-                        if xdef is not None and re.match(self.category_pattern, s):
-                            rs = rs or xdef.find(s, pro, value)
+                        if xdef is not None and re.search(self.category_pattern, s) is not None:
+                            rs = rs or xdef.find(s, pro, value, False)
                         else:
                             rs = rs or value.lower() == s.lower()
         return rs
 
     def findWithTags(self, *tags: str, sensitive: bool = True, xdef: xhash.XashDef = None):
+        if len(tags) == 0 or "" in tags:
+            return True
+
         rs = True
-        for k in tags:
-            k, v = k.split(XashCategory.sep)
+        for key in tags:
+            k, v = key.split(XashCategory.sep)
             rs = rs and k is not None and v is not None and self.findWithTag(k, v, sensitive, xdef=xdef)
             if not rs:
                 break
         return rs
 
     def findWithName(self, name: str, sensitive: bool = True) -> bool:
+        if name == "":
+            return True
+
         if sensitive:
             return name.lower() in self.name.lower()
         else:
-            return name in self.name
-
-    def equalName(self, name: str, sensitive: bool = True) -> bool:
-        if sensitive:
             return name.lower() == self.name.lower()
-        else:
-            return name == self.name
 
     def __eq__(self, other):
         if isinstance(other, Xash):
@@ -130,15 +133,29 @@ class Xash:
         elif isinstance(other, str):
             return self.getPath() == other
 
-    def findWithCategory(self, categories_name: str, file_id: str = None) -> bool:
-        if file_id is None:
-            return categories_name == self.categories.category
+    def findWithCategory(self, categories_name: str, file_id: str = None, sensitive: bool = True) -> bool:
+        if categories_name == "":
+            return True
+
+        if sensitive:
+            if file_id is None:
+                return categories_name in self.categories.category if self.categories is not None else False
+            else:
+                return XashCategory.sep.join(
+                    [categories_name, file_id]) == self.categories.data if self.categories is not None else False
         else:
-            return XashCategory.sep.join([categories_name, file_id]) == self.categories.data
+            if file_id is None:
+                return categories_name == self.categories.category if self.categories is not None else False
+            else:
+                return XashCategory.sep.join(
+                    [categories_name, file_id]) == self.categories.data if self.categories is not None else False
 
     def findWithId(self, categories: str) -> bool:
+        if categories == "":
+            return True
+
         c = xhash.XashCategory(categories, False)
-        return self.categories.data == c.data
+        return self.categories.data == c.data if self.categories is not None else False
 
 
 class XashCategory:

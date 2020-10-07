@@ -1,4 +1,4 @@
-import xu.compa.parapluie as Parapluie
+import xu.compa.Parapluie as Parapluie
 from xu.src.python.main import main
 from xu.src.res import Manage
 

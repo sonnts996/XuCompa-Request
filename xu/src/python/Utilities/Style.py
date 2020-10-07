@@ -1,17 +1,17 @@
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget
 
-import xu.compa.parapluie as Parapluie
+from xu.compa.Parapluie import PResource, PFunction
 
 
 def style() -> str:
-    return Parapluie.Resource.stylesheet()
+    return PResource.stylesheet()
 
 
 def applyStyle(w: QWidget, stylePath: str = None):
     if stylePath is None:
         stylePath = style()
-    Parapluie.Style.applyStyle(w, stylePath)
+    PFunction.applyStyle(w, stylePath)
 
 
 def windowTitle() -> str:

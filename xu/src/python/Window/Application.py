@@ -1,14 +1,19 @@
 from PyQt5.QtWidgets import QApplication
 
-import xu.compa.parapluie as Parapluie
+from xu.compa.Parapluie import PResource
 from xu.src.python.Window.MainWindow import MainWindow
 from xu.src.res import Manage
 
 
 def app(args):
     application = QApplication(args)
-    Parapluie.Resource.initResource()
+    PResource.initResource()
     Manage.initResource()
     window = MainWindow()
     window.showMaximized()
-    return application.exec_()
+    try:
+        a = application.exec_()
+    except Exception as ex:
+        a = -1
+        print(ex)
+    return a
