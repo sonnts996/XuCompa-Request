@@ -62,8 +62,41 @@ class Xash:
                 for i in range(1, len(lst)):
                     self.tag[lst[0]].append(lst[i])
 
+    def getTag(self, prop) -> list:
+        for t in self.tag:
+            if prop.lower() == t.lower():
+                return self.tag[t]
+        return []
+
+    def isImportTag(self, data):
+        return re.match(self.import_pattern, data)
+
     def getPath(self):
         return os.path.join(self.folder, self.data + self.ext)
+
+    def getName(self):
+        return self.name
+
+    def getFolder(self):
+        return self.folder
+
+    def getCategory(self):
+        if self.categories is not None:
+            return self.categories.category
+        else:
+            return ""
+
+    def getId(self):
+        if self.categories is not None:
+            return self.categories.getId()
+        else:
+            return ""
+
+    def getNumberId(self):
+        if self.categories is not None:
+            return self.categories.id
+        else:
+            return ""
 
     def __str__(self):
         data = self.getObject()
@@ -187,6 +220,9 @@ class XashCategory:
     def __str__(self):
         data = self.getObject()
         return json.dumps(data, ensure_ascii=False)
+
+    def getId(self):
+        return '[%s#%s]' % (self.category, self.id)
 
     def getObject(self):
         return {

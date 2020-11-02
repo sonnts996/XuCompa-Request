@@ -50,7 +50,7 @@ class JSONEditor(Qsci.QsciScintilla):
         self.SendScintilla(QsciScintilla.SCI_SETHSCROLLBAR, 0)
 
         # not too small
-        self.setMinimumSize(300, 450)
+        self.setMinimumSize(300, 100)
 
     def keyPressEvent(self, *args, **kwargs):
         super(JSONEditor, self).keyPressEvent(*args, **kwargs)

@@ -1,5 +1,6 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import QSize, QTimer, Qt
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget, QToolButton, QLabel, QSizePolicy, QDialog
 
 from xu.compa.Parapluie import Parapluie, PResource
@@ -29,13 +30,15 @@ class PAlert(PSticky):
             self.setObjectName(Parapluie.Object_Alert_Error)
         elif self.alertType == Parapluie.Alert_Warning:
             self.setObjectName(Parapluie.Object_Alert_Warning)
+        elif self.alertType == Parapluie.Alert_Success:
+            self.setObjectName(Parapluie.Object_Alert_Success)
         else:
             self.setObjectName(Parapluie.Object_Alert_Information)
 
         close = QToolButton()
         close.setObjectName(Parapluie.Object_StickyWindow_FunctionButton)
         close.setIconSize(QSize(12, 12))
-        close.setIcon(PResource.defaultIcon(Parapluie.Icon_Cancel_Svg))
+        close.setIcon(QIcon(PResource.white(Parapluie.Icon_Cancel_Svg)))
         close.pressed.connect(self.close)
         self.addWindowAction(close)
 

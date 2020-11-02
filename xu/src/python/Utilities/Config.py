@@ -19,6 +19,17 @@ def getConfigFile():
     return os.path.join(getDataFolder(), "config.json")
 
 
+def getRequestFolder():
+    path = os.path.join(getDataFolder(), "Request")
+    if not os.path.isdir(path):
+        PFunction.linux_mkdir(getDataFolder(), path, "Request")
+    return path, os.path.join(path, "description.xdef")
+
+
+def getAPILinkFile():
+    return os.path.join(getDataFolder(), "api_link.json")
+
+
 def getConfig():
     if os.path.isfile(getConfigFile()):
         try:
@@ -29,7 +40,10 @@ def getConfig():
             print(ex)
     return {
         "viewer": {
-            "last_open": ""
+            "last_open": PFunction.getUserFolder()
+        },
+        "request": {
+            "last_open": PFunction.getUserFolder()
         }
     }
 
@@ -48,6 +62,27 @@ def getViewerConfig():
 
 def getViewerConfig_LastOpen():
     viewerConfig = getViewerConfig()
+    if "last_open" in viewerConfig:
+        return viewerConfig["last_open"]
+    else:
+        viewerConfig["last_open"] = PFunction.getUserFolder()
+        return PFunction.getUserFolder()
+
+
+def getRequestConfig():
+    config = getConfig()
+
+    if "request" in config:
+        return config["request"]
+    else:
+        config["request"] = {
+            "last_open": PFunction.getUserFolder()
+        }
+        return config["request"]
+
+
+def getRequestConfig_LastOpen():
+    viewerConfig = getRequestConfig()
     if "last_open" in viewerConfig:
         return viewerConfig["last_open"]
     else:

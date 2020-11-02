@@ -5,10 +5,10 @@ from xu.compa.Parapluie.src.ActionWidget import PHolder
 
 
 class ItemHeader(PHolder):
-    def __init__(self):
+    def __init__(self, objName= Parapluie.Object_ItemHeader):
         super().__init__()
         self.label = QLabel()
-        self.setObjectName(Parapluie.Object_ItemHeader)
+        self.setObjectName(objName)
 
         layout = QVBoxLayout()
         layout.addWidget(self.label)

@@ -1,17 +1,18 @@
-from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtWidgets import QListWidget
 
+from xu.compa.Parapluie.src.ActionWidget import PWidget
 from xu.compa.Parapluie.src.Adapter import PListAdapter
-from xu.src.python.JsonViewer.Model import JSONFile
-from xu.src.python.Model.ItemModel import ItemModel
+from xu.src.python.Model import ItemModel, XFile
 from xu.src.python.Module import ItemHolder, ItemHeader
 
 
 class JsonAdapter(PListAdapter):
-    def __init__(self, layout: QVBoxLayout, data, itemSelected, itemClose):
+    def __init__(self, parent: PWidget, layout: QListWidget, data, itemSelected, itemClose):
         super().__init__(layout)
         self.dataList = data
         self.itemSelected = itemSelected
         self.itemClose = itemClose
+        self.parent = parent
 
     def count(self) -> int:
         return len(self.dataList)
@@ -21,11 +22,11 @@ class JsonAdapter(PListAdapter):
 
     def getWidget(self, position: int, w: ItemHolder = None):
         i: ItemModel = self.item(position)
-        if isinstance(i.file, JSONFile):
-            w = ItemHolder()
-            x: JSONFile = i.file
+        if isinstance(i.file, XFile):
+            w = ItemHolder(self.parent)
+            x: XFile = i.file
             w.setData(x)
-            w.setText(x.name()[0], x.parent(), x.path, i.selected > 0)
+            w.setText(x.name()[0], x.parent(), x.getPath(), i.selected > 0)
             w.setOnSelected(onSelected=self.itemSelected)
             w.setOnClose(onClose=self.itemClose)
         elif isinstance(i.file, str):

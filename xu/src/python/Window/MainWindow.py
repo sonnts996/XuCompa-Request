@@ -50,7 +50,9 @@ class MainWindow(PWindow):
         self.stack.currentChanged.connect(self.stackChange)
 
         self.setCentralWidget(self.stack)
-        self.setContentsMargins(0, 0, 4, 0)
+        self.setContentsMargins(0, 0, 0, 0)
+
+        self.showRequest()
 
     def stackChange(self, index: int):
         for i in self.stackList:
@@ -68,7 +70,8 @@ class MainWindow(PWindow):
 
     def showRequest(self):
         if self.requestView is None:
-            self.requestView = RequestViewer()
+            self.requestView = RequestViewer(self)
+            self.requestView.alert.connect(self.showAlert)
             self.stackList[str(self.stack.count())] = self.requestAction
             self.stack.addWidget(self.requestView)
 
@@ -80,3 +83,5 @@ class MainWindow(PWindow):
         if button1 is None and button2 is None:
             alert.setAutoClose(3000)
         self.addAlert(alert)
+
+

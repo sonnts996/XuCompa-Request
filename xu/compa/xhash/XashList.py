@@ -4,8 +4,11 @@ import xu.compa.xhash as xhash
 
 
 class XashList:
-    def __init__(self):
-        self.list: list = []
+    def __init__(self, listXash=None):
+        if listXash is None:
+            listXash = []
+
+        self.list: list = listXash
         self.xdef = xhash.XashDef()
 
     def addXash(self, xha: xhash.Xash) -> int:
@@ -51,6 +54,16 @@ class XashList:
             t = False if len(tag) <= 0 else x.findWithTags(*tag, sensitive=sensitive)
             n = False if name.isspace() or name == "" else x.findWithName(name, sensitive=sensitive)
             if c or n or t:
+                rs.append(x)
+        return rs
+
+    def findMatchAll(self, category: str, name: str, *tag: str, sensitive: bool = True) -> list:
+        rs = []
+        for x in self.list:
+            c = x.findWithCategory(category, sensitive=sensitive)
+            t = x.findWithTags(*tag, sensitive=sensitive)
+            n = x.findWithName(name, sensitive=sensitive)
+            if c and n and t:
                 rs.append(x)
         return rs
 

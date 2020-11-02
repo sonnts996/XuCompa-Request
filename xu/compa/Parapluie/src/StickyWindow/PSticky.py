@@ -15,7 +15,7 @@ class PSticky(QDialog):
     def __init__(self, parent: QWidget, inner: bool = False):
         if not inner:
             super().__init__()
-
+        self.inner = inner
         self.__parent__ = parent
         if self.__parent__ is not None:
 
@@ -174,8 +174,10 @@ class PSticky(QDialog):
 
     def followParentRelative(self):
         if self.__follow__ and self.__parent__ is not None:
-            # pPoint = self.__parent__.mapToGlobal(QPoint(self.__parent__.x(), self.__parent__.y()))
-            pPoint = QPoint(0, 0)
+            if self.inner:
+                pPoint = self.__parent__.mapToGlobal(QPoint(self.__parent__.x(), self.__parent__.y()))
+            else:
+                pPoint = QPoint(0, 0)
 
             if self.HAnchor == Parapluie.HCenter:
                 x = pPoint.x() + self.__parent__.width() / 2 - (self.width() / 2)

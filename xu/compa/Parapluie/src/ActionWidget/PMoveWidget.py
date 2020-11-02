@@ -1,5 +1,7 @@
+from PyQt5 import QtGui
 from PyQt5.QtCore import QPoint
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtGui import QPainter
+from PyQt5.QtWidgets import QWidget, QStyleOption, QStyle
 
 
 class PMoveWidget(QWidget):
@@ -25,3 +27,9 @@ class PMoveWidget(QWidget):
 
     def isMovable(self) -> bool:
         return self._movable_
+
+    def paintEvent(self, a0: QtGui.QPaintEvent) -> None:
+        opt = QStyleOption()
+        opt.initFrom(self)
+        painter = QPainter(self)
+        self.style().drawPrimitive(QStyle.PE_Widget, opt, painter, self)

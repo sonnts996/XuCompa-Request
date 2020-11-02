@@ -1,11 +1,11 @@
 import os
 
-from PyQt5.QtCore import Qt, pyqtSignal
-from PyQt5.QtWidgets import QVBoxLayout, QLineEdit, QHBoxLayout, QListWidget, QToolButton, QFileDialog, QSizePolicy
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtWidgets import QVBoxLayout, QLineEdit, QHBoxLayout, QListWidget, QToolButton, QFileDialog
 
-from xu.compa.Parapluie import Parapluie, PFunction, PResource, PWidget
+from xu.compa.Parapluie import PResource, PWidget
 from xu.src.python.JsonViewer.Adapter import JsonAdapter
-from xu.src.python.JsonViewer.Model import JSONFile
+from xu.src.python.Model import XFile
 from xu.src.python.Model.ItemModel import ItemModel
 from xu.src.python.Utilities import *
 
@@ -37,6 +37,7 @@ class JSONNavigation(PWidget):
         topBar.addWidget(self.addButton)
 
         self.listDataWidget = QListWidget()
+        self.listDataWidget.setObjectName(Parapluie.Object_Raised)
         self.listDataWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.listDataWidget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.listDataWidget.horizontalScrollBar().setEnabled(False)
@@ -48,7 +49,7 @@ class JSONNavigation(PWidget):
         self.setObjectName(Parapluie.Object_Raised)
         self.setFixedWidth(300)
         self.setLayout(layout)
-        PFunction.applyShadow(self)
+        # PFunction.applyShadow(self)
 
         self.dataList = []
         self.dataSource = []
@@ -56,7 +57,7 @@ class JSONNavigation(PWidget):
         self.currentFile = None
         self.newCount = -1
 
-        self.listAdapter = JsonAdapter(self.listDataWidget, self.dataList, self.onItemSelected, self.onItemClosed)
+        self.listAdapter = JsonAdapter(self, self.listDataWidget, self.dataList, self.onItemSelected, self.onItemClosed)
 
     def updateDataList(self, lstNew, lstSrc):
         self.dataList.clear()
@@ -98,7 +99,7 @@ class JSONNavigation(PWidget):
 
     def newFile(self):
         self.newCount += 1
-        json = JSONFile("Unsaved\\Untitled-" + str(self.newCount))
+        json = XFile("Unsaved\\Untitled-" + str(self.newCount))
         self.currentFile = json
         self.dataTemp.insert(0, json)
         self.updateDataList(self.dataTemp, self.dataSource)
@@ -110,7 +111,7 @@ class JSONNavigation(PWidget):
             self.currentFile = data
             self.currentChange.emit()
 
-        if isinstance(data, JSONFile):
+        if isinstance(data, XFile):
             for item in self.dataList:
                 if item.file == data:
                     item.selected = 1
@@ -136,14 +137,18 @@ class JSONNavigation(PWidget):
 
     def openFile(self):
         init_dir = Config.getViewerConfig_LastOpen()
-
-        name = QFileDialog.getOpenFileName(self, 'Open file', init_dir, "JSON files (*.json)")
+        file_ext = """All files (*);;
+                        JSON files (*.json);;
+                        XML files (*.xml);;
+                        HTML files (*.html);;
+                        Javascript files (*.js)"""
+        name = QFileDialog.getOpenFileName(self, 'Open file', init_dir, file_ext)
         if name[0] != "":
             config = Config.getConfig()
             config["viewer"]["last_open"] = os.path.dirname(name[0])
             Config.updateConfig(config)
 
-            file = JSONFile(name[0])
+            file = XFile(name[0])
             self.currentFile = file
             self.dataSource.insert(0, file)
             self.updateDataList(self.dataTemp, self.dataSource)

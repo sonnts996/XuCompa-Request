@@ -4,6 +4,7 @@ from typing import Final
 Object_Test: Final[str] = "Test"
 Object_Raised: Final[str] = "Raised"
 Object_Header: Final[str] = "Header"
+Object_QSplitter: Final[str]= "QSplitter"
 # Sticky Window
 Object_StickyWindow: Final[str] = "StickyWindow"
 Object_StickyWindow_FunctionButton: Final[str] = "FunctionButton"
@@ -11,10 +12,13 @@ Object_StickyWindow_ResizeBottom: Final[str] = "ResizeBottom"
 Object_Alert_Error: Final[str] = "Alert_Error"
 Object_Alert_Warning: Final[str] = "Alert_Warning"
 Object_Alert_Information: Final[str] = "Alert_Information"
+Object_Alert_Success: Final[str] = "Alert_Success"
 # Button
 Object_OptimizeButton: Final[str] = "OptimizeButton"
 Object_NegativeButton: Final[str] = "NegativeButton"
 Object_ColorButton: Final[str] = "ColorButton"
+# Form
+Object_FormLabel: Final[str] = "FormLabel"
 
 # Edit
 Object_OutlineBox: Final[str] = "OutlineBox"
@@ -25,6 +29,7 @@ Object_Item_Category: Final[str] = "Category"
 Object_Item_Tittle: Final[str] = "Tittle"
 Object_Item_Description: Final[str] = "Description"
 Object_ItemHeader: Final[str] = "ItemHeader"
+Object_ItemHeader2: Final[str] = "ItemHeader2"
 
 # Icon
 Icon_Add_Svg: Final[str] = "add.svg"
@@ -48,6 +53,11 @@ Icon_Clean_Code_Svg: Final[str] = "clean_code.svg"
 Icon_Arrow_Right_Svg: Final[str] = "arrow_right.svg"
 Icon_Double_Right_Chevron_Svg: Final[str] = "double_right_chevron.svg"
 Icon_Save_Svg: Final[str] = "save.svg"
+Icon_Play_Button_Svg: Final[str] = "play-button.svg"
+Icon_Drag_Horizontal_Svg: Final[str] = "drag_horizontal.svg"
+Icon_Drag_Vertical_Svg: Final[str] = "drag_vertical.svg"
+Icon_Clear_All_Svg: Final[str] = "clear_all.svg"
+Icon_Wrap_Text_Svg: Final[str] = "wrap_text.svg"
 
 # MessageDialog: code form 0 -> 7
 Button_Neutral: Final[int] = 0
@@ -107,3 +117,4 @@ def PositionVRead(tpe: int) -> int:
 Alert_Error: Final[str] = "Error"
 Alert_Warning: Final[str] = "Warning"
 Alert_Information: Final[str] = "Information"
+Alert_Success: Final[str] = "Success"

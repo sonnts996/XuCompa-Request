@@ -1,7 +1,12 @@
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import QSplitter
+from PyQt5.QtWidgets import QSplitter, QWidget
 
-from xu.src.python.JsonViewer import JSONNavigation, JSONWidget, ParamEditor
+from xu.compa.Parapluie import Parapluie
+from xu.src.python.JsonViewer import JSONNavigation
+from xu.src.python.Module.ParamEditor import EditorType
+from xu.src.python.Module.ParamEditor.ParamEditor import ParamEditor
+from xu.src.python.Module.ParamEditor.ParamEditorConnect import ParamEditorConnect
+from xu.src.python.Module.ParamEditor.TextEditWidget import TextEditWidget
 
 
 class JSONViewer(QSplitter):
@@ -14,25 +19,28 @@ class JSONViewer(QSplitter):
         self.leftWidget.currentChange.connect(self.fileSelected)
         self.addWidget(self.leftWidget)
 
-        self.jsonEdit = JSONWidget()
+        self.jsonEdit = TextEditWidget()
         self.jsonEdit.alert.connect(lambda txt, tpe, button1, button2: self.alert.emit(txt, tpe, button1, button2))
-        self.jsonEdit.syncRequest.connect(self.editSignal)
 
         self.addWidget(self.jsonEdit)
 
         self.paramEdit = ParamEditor()
-        self.paramEdit.syncRequest.connect(self.tableSignal)
+        self.paramEdit.setObjectName(Parapluie.Object_Raised)
+        self.paramEdit.error.connect(lambda s: self.alert.emit(s, Parapluie.Alert_Error, None, None))
+
         self.addWidget(self.paramEdit)
+
+        self.paramConnect = ParamEditorConnect(self.paramEdit, self.jsonEdit)
+
+        widget = QWidget()
+        widget.setMaximumWidth(2)
+        widget.setMinimumWidth(2)
+        self.addWidget(widget)
 
         self.setChildrenCollapsible(False)
 
         self.leftWidget.newFile()
-
-    def tableSignal(self, data):
-        self.jsonEdit.setData(data)
-
-    def editSignal(self, data):
-        self.paramEdit.setData(data)
+        self.jsonEdit.setEditorType(EditorType.XML)
 
     def fileSelected(self):
         if self.leftWidget.currentFile is not None:
@@ -42,5 +50,5 @@ class JSONViewer(QSplitter):
         else:
             self.paramEdit.setVisible(False)
             self.jsonEdit.setVisible(False)
-            self.paramEdit.setData({})
+            self.paramEdit.setData(None)
             self.jsonEdit.setText("")
