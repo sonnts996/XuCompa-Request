@@ -1,4 +1,5 @@
 app = {
+    "name": "XuCompa-Request",
     "version": 2.0,
     "author": "Xu Company",
     "date": "Sept 2020",

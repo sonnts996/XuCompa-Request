@@ -1,1 +1,1 @@
-<RCC><qresource><file alias="temp.css">temp.css</file></qresource><qresource prefix="icon"><file alias="label.svg">icon\label.svg</file></qresource><qresource prefix="window-icon"><file alias="link.svg">window-icon\link.svg</file></qresource></RCC>
+<RCC><qresource><file alias="temp.css">temp.css</file></qresource><qresource prefix="icon"><file alias="label.svg">icon\label.svg</file></qresource><qresource prefix="window_icon"><file alias="link.svg">window_icon\link.svg</file></qresource></RCC>

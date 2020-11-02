@@ -75,7 +75,7 @@ def export2Define(lst: list):
 class FileDefine:
     def __init__(self, path):
         self.name = os.path.basename(path).replace(".", "_").replace("-", "_").title()
-        self.path =  os.path.basename(path)
+        self.path = os.path.basename(path)
 
     def __eq__(self, other):
         if isinstance(other, FileDefine):

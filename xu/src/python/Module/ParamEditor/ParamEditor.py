@@ -58,6 +58,9 @@ class ParamEditor(QTreeView):
         self.editable = editable
         self.refresh()
 
+    def setHeaderVisible(self, visible):
+        super(ParamEditor, self).header().setVisible(visible)
+
     def setParamType(self, paramType: ParamType):
         if self.paramType != paramType:
             self.paramType = paramType
@@ -88,7 +91,7 @@ class ParamEditor(QTreeView):
                 # xml = Et.Element('root')
                 self.xmlView.setData(None)
         elif self.paramType == ParamType.Table:
-            if param is not None or isinstance(param, list):
+            if param is not None and isinstance(param, list):
                 param = Jso.fromObject(param)
             else:
                 param = Jso.fromObject([])

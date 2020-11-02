@@ -26,7 +26,7 @@ def applyWindowTitle(w: QWidget, title: str = None):
 
 
 def windowIcon() -> str:
-    return ":/window-icon/link.svg"
+    return ":/window_icon/link.svg"
 
 
 def applyWindowIcon(w: QWidget, icon: QIcon = None):

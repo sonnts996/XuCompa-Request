@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QToolBar, QWidget, QSizePolicy, QStackedWidget, QAct
 
 import xu.src.python.Utilities as Util
 from xu.compa.Parapluie import PResource, Parapluie, PWindow, PAlert
+from xu.src.python.About.About import About
 from xu.src.python.JsonViewer import JSONViewer
 from xu.src.python.Request.RequestViewer import RequestViewer
 
@@ -38,7 +39,7 @@ class MainWindow(PWindow):
         stretchWidget = QWidget()
         stretchWidget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         mainToolbar.addWidget(stretchWidget)
-        mainToolbar.addAction(PResource.invertIcon(Parapluie.Icon_Information_Svg), "Information")
+        mainToolbar.addAction(PResource.invertIcon(Parapluie.Icon_Information_Svg), "Information", self.openAbout)
 
         self.addToolBar(Qt.LeftToolBarArea, mainToolbar)
 
@@ -83,4 +84,6 @@ class MainWindow(PWindow):
             alert.setAutoClose(3000)
         self.addAlert(alert)
 
-
+    def openAbout(self):
+        self.about = About(self)
+        self.about.exec_()
