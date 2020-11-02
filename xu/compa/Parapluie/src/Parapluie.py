@@ -58,6 +58,7 @@ Icon_Drag_Horizontal_Svg: Final[str] = "drag_horizontal.svg"
 Icon_Drag_Vertical_Svg: Final[str] = "drag_vertical.svg"
 Icon_Clear_All_Svg: Final[str] = "clear_all.svg"
 Icon_Wrap_Text_Svg: Final[str] = "wrap_text.svg"
+Icon_Web_Development_Svg: Final[str] = "web-development.svg"
 
 # MessageDialog: code form 0 -> 7
 Button_Neutral: Final[int] = 0

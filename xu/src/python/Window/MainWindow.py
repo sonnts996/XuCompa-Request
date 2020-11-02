@@ -30,8 +30,8 @@ class MainWindow(PWindow):
                                                    "Request",
                                                    self.showRequest)
         self.requestAction.setCheckable(True)
-        self.jsonAction = mainToolbar.addAction(PResource.invertIcon(Parapluie.Icon_Document_Json_Svg),
-                                                "JSON Viewer",
+        self.jsonAction = mainToolbar.addAction(PResource.invertIcon(Parapluie.Icon_Web_Development_Svg),
+                                                "Viewer",
                                                 self.showJSONViewer)
         self.jsonAction.setCheckable(True)
 
@@ -40,7 +40,6 @@ class MainWindow(PWindow):
         mainToolbar.addWidget(stretchWidget)
         mainToolbar.addAction(PResource.invertIcon(Parapluie.Icon_Information_Svg), "Information")
 
-        mainToolbar.addAction(PResource.invertIcon(Parapluie.Icon_Levels_Svg), "Settings")
         self.addToolBar(Qt.LeftToolBarArea, mainToolbar)
 
         bottomWidget = QWidget()
