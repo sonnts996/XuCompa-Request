@@ -20,6 +20,7 @@ class JSONViewer(QSplitter):
         self.addWidget(self.leftWidget)
 
         self.jsonEdit = TextEditWidget()
+        self.jsonEdit.setObjectName(Parapluie.Object_Editor_Flat)
         self.jsonEdit.alert.connect(lambda txt, tpe, button1, button2: self.alert.emit(txt, tpe, button1, button2))
 
         self.addWidget(self.jsonEdit)
@@ -40,7 +41,7 @@ class JSONViewer(QSplitter):
         self.setChildrenCollapsible(False)
 
         self.leftWidget.newFile()
-        self.jsonEdit.setEditorType(EditorType.XML)
+        self.jsonEdit.setEditorType(EditorType.JSON)
 
     def fileSelected(self):
         if self.leftWidget.currentFile is not None:

@@ -52,7 +52,7 @@ class TextEditWidget(PWidget):
         self.wrapButton.setCheckable(True)
         self.wrapButton.setText("Wrap")
         self.wrapButton.setToolTip("Wrap/Unwrap (Ctrl+W)")
-        self.wrapButton.setIcon(PResource.invertIcon(Parapluie.Icon_Wrap_Text_Svg))
+        self.wrapButton.setIcon(PResource.defaultIcon(Parapluie.Icon_Wrap_Text_Svg))
         self.wrapButton.setFixedSize(iconSize, iconSize)
         self.wrapButton.pressed.connect(self.wrapText)
         tool.addWidget(self.wrapButton)
@@ -61,7 +61,7 @@ class TextEditWidget(PWidget):
         formatButton = QToolButton()
         formatButton.setText("Format")
         formatButton.setToolTip("Format Code (Ctrl+F)")
-        formatButton.setIcon(PResource.invertIcon(Parapluie.Icon_Clean_Code_Svg))
+        formatButton.setIcon(PResource.defaultIcon(Parapluie.Icon_Clean_Code_Svg))
         formatButton.setFixedSize(iconSize, iconSize)
         formatButton.pressed.connect(self.formatText)
         tool.addWidget(formatButton)
@@ -70,7 +70,7 @@ class TextEditWidget(PWidget):
             saveButton = QToolButton()
             saveButton.setText("Save")
             saveButton.setToolTip("Save (Ctrl+S)")
-            saveButton.setIcon(PResource.invertIcon(Parapluie.Icon_Save_Svg))
+            saveButton.setIcon(PResource.defaultIcon(Parapluie.Icon_Save_Svg))
             saveButton.setFixedSize(iconSize, iconSize)
             saveButton.pressed.connect(self.saveData)
             tool.addWidget(saveButton)
@@ -79,7 +79,7 @@ class TextEditWidget(PWidget):
             syncButton = QToolButton()
             syncButton.setText("Sync")
             syncButton.setToolTip("Sync (Ctrl+B)")
-            syncButton.setIcon(PResource.invertIcon(Parapluie.Icon_Double_Right_Chevron_Svg))
+            syncButton.setIcon(PResource.defaultIcon(Parapluie.Icon_Double_Right_Chevron_Svg))
             syncButton.setFixedSize(iconSize, iconSize)
             syncButton.pressed.connect(self.syncJson)
             tool.addWidget(syncButton)
@@ -87,7 +87,7 @@ class TextEditWidget(PWidget):
         widget = QWidget()
         widget.setLayout(tool)
         widget.layout().setContentsMargins(8, 0, 8, 0)
-        widget.setObjectName(Parapluie.Object_Header)
+        widget.setObjectName(Parapluie.Object_Editor_Header)
         widget.setMaximumHeight(iconSize)
 
         layout = QVBoxLayout()
@@ -96,7 +96,7 @@ class TextEditWidget(PWidget):
 
         self.setLayout(layout)
         self.layout().setContentsMargins(5, 5, 5, 5)
-        self.setObjectName(Parapluie.Object_Header)
+        self.setObjectName(Parapluie.Object_Editor)
 
         self.currentFile = None
 

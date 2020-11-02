@@ -234,6 +234,9 @@ QColumnView {
     show-decoration-selected: 1;
 }
 
+QTreeView::branch {
+    border-bottom: 1px solid #EEEEEE;
+}
 
 QTreeView::branch:closed:has-children {
     image: url(":/icons/arrow_right.svg");
@@ -263,10 +266,11 @@ QTableView::item,
 QColumnView::item,
 QAbstractItemView::item {
     padding: 0;
-    min-height: 28px;
+    min-height: 32px;
     color: #424242;
     background-color: transparent;
     border-right: 1px solid #fafafa;
+    border-bottom: 1px solid #EEEEEE;
 }
 
 QTreeView::item:pressed,
@@ -327,23 +331,25 @@ QListWidget::item {
 }
 
 QHeaderView {
-    background-color: #b1bee1;
+    background-color: white;
     color: #FFFFFF;
     padding: 4px 8px 4px 8px;
+    border-bottom: 1px solid #cccccc;
 }
 
 QHeaderView::section {
-    background-color: #b1bee1;
-    color: #FFFFFF;
+    background-color: white;
+    color: #424242;
     padding: 2px 2px 2px 8px;
     text-align: left;
     border: none;
     border-right: 1px solid white;
     outline: none;
+    font-weight: bold;
 }
 
 QAbstractItemView {
-    alternate-background-color: #f0f0f0;
+    alternate-background-color: #fafafa;
     padding: 0;
 }
 
@@ -376,6 +382,10 @@ QComboBox {
     font-size: 14px;
 }
 
+QComboBox QListView::item {
+    border: none;
+}
+
 QComboBox::down-arrow {
     image: url(":icons/arrow_drop_down.svg");
     height: 20px;
@@ -398,7 +408,9 @@ QComboBox QAbstractItemView {
 
 QTabWidget::pane {
     border-top: 1px solid #4a70b6;
-    padding-top: 5px;
+    /*border: 1px solid #aaaaaa;*/
+    margin-top: -12px;
+    padding-top: 24px;
 }
 
 QTabBar, QTabWidget, QTabWidget QStackedWidget {
@@ -407,30 +419,43 @@ QTabBar, QTabWidget, QTabWidget QStackedWidget {
 
 QTabBar {
     qproperty-drawBase: 0;
+    background: #b1bee1;
+    alignment: right;
 }
 
 QTabBar::tab {
+    background: white;
+    border-top: 1px solid #4a70b6;
+    border-bottom: 1px solid #4a70b6;
     min-width: 100px;
     height: 24px;
-    color: white;
+    color: #424242;
     font-size: 14px;
     margin-top: 4px;
-    background-color: #c8b1a0;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
     padding: 4px 8px 4px 8px;
-    margin-left: 4px;
+}
+
+QTabBar::tab:first {
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-left: 1px solid #4a70b6;
+}
+
+QTabBar::tab:last {
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    border-right: 1px solid #4a70b6;
 }
 
 QTabBar::tab:hover {
-    background-color: #d5c1b6;
+    background-color: #dde2f1;
 }
 
 QTabBar::tab:selected {
-    background-color: #4a70b6;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    background: #4a70b6;
+    /*border-bottom: 2px solid #4a70b6;*/
     padding: 4px 8px 4px 8px;
+    color: white;
 }
 
 
@@ -448,6 +473,11 @@ QTabBar::close-button:hover {
 QTabBar::close-button:hover::selected {
     background: rgba(66, 66, 66, 0.5);
     border-radius: 5px;
+}
+
+QTabWidget::tab-bar {
+    alignment: right;
+    padding-right: 50px;
 }
 
 
@@ -693,4 +723,62 @@ QTabBar::close-button:hover::selected {
 #QSplitter::handle:vertical {
     height: 5px;
     image: url(":/icons//drag_vertical.svg");
+}
+
+#Editor {
+    background: white;
+    border: 1px solid #f0f0f0;
+    border-radius: 10px;
+}
+
+#Editor_Flat {
+    background: white;
+    /*border: 1px solid #f0f0f0;*/
+    border-radius: 0;
+}
+
+
+#Editor_Header {
+    background: white;
+    border: none;
+}
+
+#Editor_Flat QComboBox,
+#Editor QComboBox {
+    /*background: #d1daf1;*/
+    color: #424242;
+    border: 1px solid #f0f0f0;
+    /*border-radius: 0;*/
+    border-radius: 5px;
+}
+
+
+#Editor_Flat QComboBox::down-arrow,
+#Editor QComboBox::down-arrow {
+    image: url(":/icons/arrow_drop_down.svg");
+    height: 20px;
+    width: 20px;
+}
+
+
+#Editor_Flat QToolButton,
+#Editor QToolButton {
+    color: #628cd7;
+}
+
+
+#Editor_Flat QToolButton:checked,
+#Editor QToolButton:checked {
+    background: #d1daf1;
+}
+
+
+#Editor_Flat TextEditor,
+#Editor TextEditor {
+    border-top: 1px solid #f0f0f0;
+}
+
+#Table{
+    background: #f0f0f0;
+    border-radius: 10px;
 }

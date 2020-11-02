@@ -12,8 +12,8 @@ class About(PSticky):
         super().__init__(parent)
 
         x = parent.x() + parent.width() / 2 - 200
-        y = parent.y() + parent.height() / 2 - 150
-        window_rect = QRect(x, y, 400, 300)
+        y = parent.y() + parent.height() / 2 - 100
+        window_rect = QRect(x, y, 400, 245)
         self.setGeometry(window_rect)
 
         self.tableLink = ParamEditor(ParamType.Param)

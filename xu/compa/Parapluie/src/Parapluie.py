@@ -4,7 +4,11 @@ from typing import Final
 Object_Test: Final[str] = "Test"
 Object_Raised: Final[str] = "Raised"
 Object_Header: Final[str] = "Header"
-Object_QSplitter: Final[str]= "QSplitter"
+Object_Editor: Final[str] = "Editor"
+Object_Editor_Header: Final[str] = "Editor_Header"
+Object_Editor_Flat: Final[str] = "Editor_Flat"
+Object_QSplitter: Final[str] = "QSplitter"
+Object_Table: Final[str] = "Table"
 # Sticky Window
 Object_StickyWindow: Final[str] = "StickyWindow"
 Object_StickyWindow_FunctionButton: Final[str] = "FunctionButton"

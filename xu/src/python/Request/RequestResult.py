@@ -2,7 +2,7 @@ from PyQt5.QtCore import pyqtSignal, QUrl
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import QSplitter
 
-from xu.compa.Parapluie import Parapluie, PTabWidget
+from xu.compa.Parapluie import Parapluie, PTabWidget, PFunction
 from xu.src.python.Module.ParamEditor import TextEditWidget, EditorType, ParamType, ParamEditor, ParamEditorConnect
 from xu.src.python.Request.Model import APIResponse, APIData, BodyType
 
@@ -35,6 +35,7 @@ class RequestResult(PTabWidget):
         splitter = QSplitter()
         splitter.addWidget(self.editor)
         splitter.addWidget(self.result)
+        splitter.setObjectName(Parapluie.Object_QSplitter)
 
         self.addTab(splitter, "Data")
         self.addTab(self.webView, "Preview")

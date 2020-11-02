@@ -29,13 +29,13 @@ class RequestLink(PSticky):
         self.tableLink.setHeaderData([
             {
                 'key': 'name',
-                'name': 'Name',
+                'name': 'NAME',
                 'editable': True,
                 'data-type': str.__class__
             },
             {
                 'key': 'url',
-                'name': 'Link',
+                'name': 'LINK',
                 'editable': True,
                 'data-type': str.__class__
             }
