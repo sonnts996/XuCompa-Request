@@ -1,6 +1,5 @@
-from PyQt5 import QtGui
-from PyQt5.QtCore import Qt, QPoint, QRect
-from PyQt5.QtWidgets import QTabWidget
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QTabWidget, QSpinBox
 
 from xu.compa.Parapluie.src.ActionWidget.PTabBar import PTabBar
 
@@ -13,5 +12,20 @@ class PTabWidget(QTabWidget):
         self.tabB.setExpanding(False)
         self.setTabBar(self.tabB)
 
+        self.sizeBox = QSpinBox()
+        self.sizeBox.setVisible(False)
+        self.sizeBox.valueChanged.connect(self.sizeChanged)
+        self.setCornerWidget(self.sizeBox, Qt.TopLeftCorner)
+
     def wheelEvent(self, *args, **kwargs):
         pass
+
+    def setSizeBox(self, min, max, step):
+        self.sizeBox.setRange(min, max)
+        self.sizeBox.setSingleStep(step)
+
+    def resizable(self, boolean):
+        self.sizeBox.setVisible(boolean)
+
+    def sizeChanged(self, value):
+        self.setFixedHeight(value)

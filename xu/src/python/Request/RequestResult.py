@@ -4,10 +4,9 @@ from PyQt5.QtCore import pyqtSignal, QUrl
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import QSplitter
 
-from xu.compa.Parapluie import Parapluie, PTabWidget, PFunction
+from xu.compa.Parapluie import Parapluie, PTabWidget
 from xu.src.python.Module.ParamEditor import TextEditWidget, EditorType, ParamType, ParamEditor, ParamEditorConnect
 from xu.src.python.Request.Model import APIResponse, APIData, BodyType
-
 
 
 class RequestResult(PTabWidget):
@@ -16,8 +15,10 @@ class RequestResult(PTabWidget):
     def __init__(self):
         super().__init__()
         self.setObjectName(Parapluie.Object_Raised)
-        self.setMinimumHeight(500)
-        self.setFixedHeight(500)
+        self.setMinimumHeight(400)
+        self.resizable(True)
+        self.setSizeBox(400, 1000, 200)
+        self.sizeBox.setValue(800)
 
         self.header = ParamEditor(ParamType.Param)
 

@@ -70,18 +70,20 @@ class RequestParam(PWidget):
 
         self.headerWidget = ParamEditor(ParamType.Param)
 
-        tab = PTabWidget()
-        tab.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        tab.addTab(self.headerWidget, "Header")
-        tab.addTab(self.paramWidget, "Param")
-        tab.addTab(self.bodyWidget, "Body")
-        tab.setMinimumHeight(300)
+        self.tab = PTabWidget()
+        self.tab.resizable(True)
+        self.tab.setSizeBox(300, 1000, 200)
+        self.tab.sizeBox.setValue(400)
+        self.tab.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.tab.addTab(self.headerWidget, "Header")
+        self.tab.addTab(self.paramWidget, "Param")
+        self.tab.addTab(self.bodyWidget, "Body")
 
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignTop)
         layout.addLayout(l1)
         layout.addLayout(l2)
-        layout.addWidget(tab)
+        layout.addWidget(self.tab)
         self.setLayout(layout)
 
         self.setObjectName(Parapluie.Object_Raised)
@@ -163,6 +165,11 @@ class RequestParam(PWidget):
         self.setDescription(config.description())
         self.setBody(config.body(), config.bodyType())
         self.setParam(config.param())
+        if config.param() is None or config.param() == {} or config.param() == []:
+            if config.body() is not None and config.body() != {} and config.body() != [] and config.body() != "":
+                self.tab.setCurrentIndex(2)
+        else:
+            self.tab.setCurrentIndex(1)
 
     def setURL(self, url):
         self.apiURL.setText(url)

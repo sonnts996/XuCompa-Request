@@ -179,37 +179,6 @@ QScrollBar::up-arrow, QScrollBar::down-arrow {
     outline: none;
 }
 
-QSpinBox {
-    background: white;
-    border-radius: 5px;
-    /*border: 1px solid #4a70b6;*/
-    max-width: 50px;
-    min-width: 50px;
-    min-height: 32px;
-    padding: 0 4px;
-}
-
-QSpinBox::down-button {
-    border-bottom-right-radius: 5px;
-    background: url(":/icons/keyboard_arrow_down.svg") no-repeat center center 32px 32px;
-    subcontrol-position: bottom right;
-    height: 16px;
-    border: none;
-    padding: 0;
-    margin: 0;
-}
-
-QSpinBox::up-button {
-    border-top-right-radius: 5px;
-    background: url(:/icons/keyboard_arrow_up.svg) no-repeat center center 32px 32px;
-    subcontrol-position: top right;
-    height: 16px;
-    border: none;
-    padding: 0;
-    margin: 0;
-}
-
-
 QTreeView,
 QListView,
 QTableView,
@@ -441,6 +410,37 @@ QComboBox QAbstractItemView {
     selection-background-color: #d5c1b6;
 }
 
+
+QSpinBox {
+    border-radius: 15px;
+    height: 32px;
+    border: 1px solid #efefef;
+    background: #efefef;
+    padding: 0 8px;
+    font-size: 14px;
+}
+
+QSpinBox::down-button {
+    border-bottom-right-radius: 5px;
+    background: url(":/icons/keyboard_arrow_down.svg") no-repeat center center 32px 32px;
+    subcontrol-position: bottom right;
+    height: 16px;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+QSpinBox::up-button {
+    border-top-right-radius: 5px;
+    background: url(:/icons/keyboard_arrow_up.svg) no-repeat center center 32px 32px;
+    subcontrol-position: top right;
+    height: 16px;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+
 QTabWidget::pane {
     border-top: 1px solid #4a70b6;
     /*border: 1px solid #aaaaaa;*/
@@ -515,6 +515,12 @@ QTabWidget::tab-bar {
     padding-right: 50px;
 }
 
+
+QTabWidget QSpinBox{
+    border-radius: 10px;
+    border: 1px solid #4a70b6;
+    background: white;
+}
 
 /**
     custom object name
