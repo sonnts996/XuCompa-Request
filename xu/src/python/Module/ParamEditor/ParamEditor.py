@@ -46,7 +46,7 @@ class ParamEditor(QTreeView):
 
         if self.header():
             header = super(ParamEditor, self).header()
-            header.setObjectName(Parapluie.Object_Header)
+            # header.setObjectName(Parapluie.Object_Header)
             header.setFixedHeight(36)
             header.setSectionResizeMode(0, QtWidgets.QHeaderView.Interactive)
             header.setCascadingSectionResizes(False)

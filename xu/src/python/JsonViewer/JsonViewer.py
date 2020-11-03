@@ -26,7 +26,7 @@ class JSONViewer(QSplitter):
         self.addWidget(self.jsonEdit)
 
         self.paramEdit = ParamEditor()
-        self.paramEdit.setObjectName(Parapluie.Object_Raised)
+        self.paramEdit.setObjectName(Parapluie.Object_Table)
         self.paramEdit.error.connect(lambda s: self.alert.emit(s, Parapluie.Alert_Error, None, None))
 
         self.addWidget(self.paramEdit)

@@ -121,78 +121,62 @@ QTextEdit {
 }
 
 QScrollBar {
-    background: transparent;
+    background: white;
+    border: none;
+    outline: none;
+}
+
+QScrollBar:horizontal,
+QScrollBar:vertical {
+    background-color: transparent;
+    border: none;
+    outline: none;
 }
 
 QScrollBar:horizontal {
     height: 8px;
-    background-color: transparent;
-    border: none;
-    outline: none;
     margin: 0 4px 0 4px;
 }
 
 QScrollBar:vertical {
-    background-color: transparent;
     width: 8px;
-    border: 1px solid transparent;
     margin: 4px 0 4px 0;
 }
 
-QScrollBar::add-line:horizontal {
-    border: 1px solid transparent;
+QScrollBar::add-line {
     background-color: transparent;
+    border: none;
+    outline: none;
 }
 
-QScrollBar::add-line:vertical {
-    border: 1px solid transparent;
+
+QScrollBar::sub-line {
     background-color: transparent;
+    border: none;
+    outline: none;
 }
 
-QScrollBar::sub-line:horizontal {
-    border: 1px solid transparent;
-    background-color: transparent;
-}
 
-QScrollBar::sub-line:vertical {
-    border: 1px solid transparent;
-    background-color: transparent;
-}
-
-QScrollBar::handle:horizontal {
+QScrollBar::handle {
     background-color: #b1bee1;
     border-radius: 3px;
-    border: 1px solid transparent;
     min-width: 8px;
-}
-
-QScrollBar::handle:vertical {
-    background-color: #b1bee1;
-    min-height: 8px;
-    border: 1px solid transparent;
-    border-radius: 3px;
-}
-
-QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
-    border-radius: 8px;
-    border: 1px solid transparent;
-    background: transparent;
-}
-
-QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-    border-radius: 8px;
-    border: 1px solid transparent;
-    background: transparent;
-}
-
-QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal {
-    background: none;
     border: none;
+    outline: none;
 }
 
-QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
-    background: none;
+QScrollBar::add-page, QScrollBar::sub-page {
+    border-radius: 8px;
+    background: transparent;
     border: none;
+    outline: none;
+}
+
+
+QScrollBar::up-arrow, QScrollBar::down-arrow {
+    background: transparent;
+    border: none;
+    outline: none;
 }
 
 QSpinBox {
@@ -234,26 +218,53 @@ QColumnView {
     show-decoration-selected: 1;
 }
 
+QTreeView,
+QTableView {
+    border: 1px solid #f0f0f0;
+    border-radius: 10px;
+}
+
+QTreeView QWidget,
+QListView QWidget,
+QTableView QWidget,
+QColumnView QWidget {
+    background: transparent;
+}
+QTreeView QScrollBar:horizontal ,
+QListView QScrollBar:horizontal ,
+QTableView QScrollBar:horizontal ,
+QColumnView QScrollBar:horizontal {
+    height: 4px;
+    margin: 0 8px 0 8px;
+}
+
+QTreeView QScrollBar:vertical ,
+QListView QScrollBar:vertical ,
+QTableView QScrollBar:vertical ,
+QColumnView QScrollBar:vertical {
+    width: 4px;
+    margin: 8px 0 8px 0;
+}
+
 QTreeView::branch {
     border-bottom: 1px solid #EEEEEE;
 }
 
-QTreeView::branch:closed:has-children {
-    image: url(":/icons/arrow_right.svg");
-}
 
-QTreeView::branch:has-children {
-    image: url(":/icons/arrow_right.svg");
+QTreeView::branch:has-children,
+QTreeView::branch:closed:has-children {
+    image: url(":/icons/chevron_right.svg");
+    height: 20px;
+    width: 20px;
 }
 
 QTreeView::branch:open:has-children {
-    image: url(":icons/arrow_drop_down.svg");
+    image: url(":icons/chevron_down.svg");
+    height: 20px;
+    width: 20px;
 }
 
-QTreeView::branch:hover {
-    background: #b1bee1;
-}
-
+QTreeView::branch:hover,
 QTreeView::branch:selected,
 QTreeView::branch:selected:hover,
 QTreeView::branch:selected:active {
@@ -269,8 +280,17 @@ QAbstractItemView::item {
     min-height: 32px;
     color: #424242;
     background-color: transparent;
-    border-right: 1px solid #fafafa;
-    border-bottom: 1px solid #EEEEEE;
+}
+
+QTreeView::item,
+QTableView::item {
+    border-right: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+QTreeView::item:last,
+QTableView::item:last {
+    border-right: none;
 }
 
 QTreeView::item:pressed,
@@ -278,6 +298,7 @@ QListView::item:pressed,
 QTableView::item:pressed,
 QColumnView::item:pressed,
 QAbstractItemView::item:pressed {
+    color: white;
     background-color: #b1bee1;
 }
 
@@ -314,6 +335,7 @@ QTableView::item:selected:active,
 QColumnView::item:selected:active,
 QAbstractItemView::item:selected:active {
     background-color: #b1bee1;
+    color: white;
 }
 
 QTreeView QLineEdit,
@@ -332,24 +354,31 @@ QListWidget::item {
 
 QHeaderView {
     background-color: white;
-    color: #FFFFFF;
+    color: white;
     padding: 4px 8px 4px 8px;
     border-bottom: 1px solid #cccccc;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 QHeaderView::section {
-    background-color: white;
+    background-color: transparent;
+    border-radius: 0;
     color: #424242;
     padding: 2px 2px 2px 8px;
     text-align: left;
     border: none;
-    border-right: 1px solid white;
+    border-right: 1px solid #f0f0f0;
     outline: none;
     font-weight: bold;
 }
 
+QHeaderView::section:last {
+    border-right: none;
+}
+
 QAbstractItemView {
-    alternate-background-color: #fafafa;
+    alternate-background-color: #f0f0f0;
     padding: 0;
 }
 
@@ -358,19 +387,24 @@ QAbstractItemView QLineEdit {
     outline: 0;
 }
 
+
 PLabelEdit {
     background: transparent;
 }
 
-PLabelEdit QLabel {
-    background: transparent;
+PLabelEdit QLabel,
+PLabelEdit QLineEdit {
     height: 36px;
     max-height: 36px;
 }
 
+PLabelEdit QLabel {
+    background: transparent;
+    color: white;
+}
+
 PLabelEdit QLineEdit {
-    height: 36px;
-    max-height: 36px;
+    color: #424242;
 }
 
 QComboBox {
@@ -387,7 +421,7 @@ QComboBox QListView::item {
 }
 
 QComboBox::down-arrow {
-    image: url(":icons/arrow_drop_down.svg");
+    image: url(":icons/keyboard_arrow_down.svg");
     height: 20px;
     width: 20px;
 }
@@ -624,7 +658,7 @@ QTabWidget::tab-bar {
 }
 
 #Header QComboBox::down-arrow {
-    image: url(":/icons_white/arrow_drop_down.svg");
+    image: url(":/icons_white/keyboard_arrow_down.svg");
     height: 20px;
     width: 20px;
 }
@@ -755,7 +789,7 @@ QTabWidget::tab-bar {
 
 #Editor_Flat QComboBox::down-arrow,
 #Editor QComboBox::down-arrow {
-    image: url(":/icons/arrow_drop_down.svg");
+    image: url(":/icons/keyboard_arrow_down.svg");
     height: 20px;
     width: 20px;
 }
@@ -778,7 +812,8 @@ QTabWidget::tab-bar {
     border-top: 1px solid #f0f0f0;
 }
 
-#Table{
-    background: #f0f0f0;
-    border-radius: 10px;
+#Table {
+    border: none;
+    border-radius: 0;
+    background: white;
 }

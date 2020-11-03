@@ -9,6 +9,7 @@ Object_Editor_Header: Final[str] = "Editor_Header"
 Object_Editor_Flat: Final[str] = "Editor_Flat"
 Object_QSplitter: Final[str] = "QSplitter"
 Object_Table: Final[str] = "Table"
+
 # Sticky Window
 Object_StickyWindow: Final[str] = "StickyWindow"
 Object_StickyWindow_FunctionButton: Final[str] = "FunctionButton"
@@ -63,6 +64,8 @@ Icon_Drag_Vertical_Svg: Final[str] = "drag_vertical.svg"
 Icon_Clear_All_Svg: Final[str] = "clear_all.svg"
 Icon_Wrap_Text_Svg: Final[str] = "wrap_text.svg"
 Icon_Web_Development_Svg: Final[str] = "web-development.svg"
+Icon_Chevron_Down_Svg: Final[str] = "chevron_down.svg"
+Icon_Chevron_Right_Svg: Final[str] = "chevron_right.svg"
 
 # MessageDialog: code form 0 -> 7
 Button_Neutral: Final[int] = 0
