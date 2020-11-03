@@ -103,17 +103,20 @@ class TextEditWidget(PWidget):
         self.editType = EditorType.Text
         self.setEditorType(EditorType.Text)
 
-    def formatText(self, key: bool = False):
+    def formatText(self, key: bool = False, sync=True):
         text = self.editor.text()
         if text != "":
             new_text = Formatter.dumps(text, self.editType, self.pushAlert if not key else None)
             if new_text:
                 self.editor.setText(new_text)
+                if sync:
+                    self.syncJson(key)
 
     def syncJson(self, key: bool = False):
         obj = self.getData(key)
         if self.editType == EditorType.JSON or self.editType == EditorType.XML:
             self.syncRequest.emit(obj)
+            self.formatText(key, False)
 
     def pushAlert(self, text, tpe=Parapluie.Alert_Error):
         self.alert.emit(text, tpe, None, None)

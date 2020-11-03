@@ -21,8 +21,10 @@ class RequestResult(PTabWidget):
         self.sizeBox.setValue(800)
 
         self.header = ParamEditor(ParamType.Param)
+        self.header.setEditable(False)
 
         self.analysis = ParamEditor(ParamType.JSON)
+        self.analysis.setEditable(False)
 
         self.result = ParamEditor(ParamType.JSON)
 
