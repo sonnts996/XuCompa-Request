@@ -1,5 +1,6 @@
 import copy
 import json
+import logging
 import os
 
 from PyQt5.QtCore import Qt, pyqtSignal
@@ -184,6 +185,7 @@ class RequestWorkspace(QWidget):
                     js = json.loads(f)
                     data2.construct(js)
             except Exception as ex:
+                logging.exception(ex)
                 self.alert.emit("Can not open file:\n" + str(ex), Parapluie.Alert_Error, None, None)
         else:
             data2.construct(self.currentFile.unsavedData.data)

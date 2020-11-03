@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import xml.etree.ElementTree as Et
 
@@ -56,7 +57,6 @@ class TextEditWidget(PWidget):
         self.wrapButton.setFixedSize(iconSize, iconSize)
         self.wrapButton.pressed.connect(self.wrapText)
         tool.addWidget(self.wrapButton)
-
 
         formatButton = QToolButton()
         formatButton.setText("Format")
@@ -130,6 +130,7 @@ class TextEditWidget(PWidget):
                     obj = json.loads(text)
                     return obj
                 except Exception as ex:
+                    logging.exception(ex)
                     if not key:
                         self.pushAlert(str(ex))
                     return None
@@ -138,6 +139,7 @@ class TextEditWidget(PWidget):
                     obj = Et.fromstring(text)
                     return obj
                 except Exception as ex:
+                    logging.exception(ex)
                     if not key:
                         self.pushAlert(str(ex))
                     return None
@@ -246,7 +248,8 @@ class TextEditWidget(PWidget):
                 self.save(self.currentFile)
         else:
             if not os.path.isfile(self.currentFile.getPath()):
-                name = QFileDialog.getSaveFileName(self, 'Save file', self.currentFile.getPath(), self.getFileExtension())
+                name = QFileDialog.getSaveFileName(self, 'Save file', self.currentFile.getPath(),
+                                                   self.getFileExtension())
                 if name[0] != "":
                     self.currentFile.setPath(name)
                     self.save(self.currentFile)
@@ -261,6 +264,7 @@ class TextEditWidget(PWidget):
             f.unsavedData = ""
             self.pushAlert("Saved: " + f.getPath(), Parapluie.Alert_Information)
         except Exception as ex:
+            logging.exception(ex)
             self.pushAlert(str(ex))
 
     def getFileExtension(self):

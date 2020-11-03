@@ -1,4 +1,5 @@
 # coding=utf8
+import logging
 
 import requests
 
@@ -12,6 +13,8 @@ from xu.src.python.Request.Model import APIResponse, APIConfig, APIAnalysis
 # DELETE
 # PATCH
 # OPTIONS
+
+
 def call(config: APIConfig) -> APIResponse:
     if config.protocol() == "POST":
         return run(requests.post, config)
@@ -47,7 +50,7 @@ def run(func, config: APIConfig):
                 r = func(url=url, timeout=30)
         data = response(r)
     except Exception as ex:
-        print(ex)
+        logging.exception(ex)
         data = APIResponse()
         data.setStatus(400)
     return data

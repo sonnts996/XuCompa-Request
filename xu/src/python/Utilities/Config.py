@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 
 from xu.compa.Parapluie.src import PFunction
@@ -37,7 +38,7 @@ def getConfig():
             obj = json.loads(data)
             return obj
         except Exception as ex:
-            print(ex)
+            logging.exception(ex)
     return {
         "viewer": {
             "last_open": PFunction.getUserFolder()

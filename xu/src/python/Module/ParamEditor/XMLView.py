@@ -1,4 +1,5 @@
 import copy
+import logging
 import xml.etree.ElementTree as Et
 
 from PyQt5.QtGui import QStandardItem
@@ -6,6 +7,7 @@ from PyQt5.QtWidgets import QAction, QMenu
 
 import xu.src.python.Module.ParamEditor as ParamEditor
 from xu.src.python import Utilities
+
 
 
 class XMLView:
@@ -215,7 +217,7 @@ class XMLView:
             import clipboard
             clipboard.copy(newText)
         except Exception as ex:
-            print(ex)
+            logging.exception(ex)
             self.treeView.error.emit(str(ex))
 
     def actionPasteAsXML(self):
@@ -227,7 +229,7 @@ class XMLView:
             self.treeView.refresh()
             self.flow.add(copy.deepcopy(self.xmlData))
         except Exception as ex:
-            print(ex)
+            logging.exception(ex)
             self.treeView.error.emit(str(ex))
 
     def actionClearAll(self):

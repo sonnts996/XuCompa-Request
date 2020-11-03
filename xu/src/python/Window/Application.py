@@ -1,3 +1,5 @@
+import logging
+
 from PyQt5.QtWidgets import QApplication
 
 from xu.compa.Parapluie import PResource
@@ -15,5 +17,5 @@ def app(args):
         a = application.exec_()
     except Exception as ex:
         a = -1
-        print(ex)
+        logging.exception(ex)
     return a

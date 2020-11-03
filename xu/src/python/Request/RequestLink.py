@@ -1,4 +1,5 @@
 import json
+import logging
 
 from PyQt5.QtCore import Qt, QRect, pyqtSignal
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QHBoxLayout
@@ -80,7 +81,7 @@ class RequestLink(PSticky):
             file.close()
             self.listLink = json.loads(data)
         except Exception as ex:
-            print(RequestLink, ex, 61)
+            logging.exception(ex)
             self.alert.emit(str(ex))
 
     def save(self):
@@ -92,5 +93,5 @@ class RequestLink(PSticky):
             file.close()
             self.completeDestroy(1)
         except Exception as ex:
-            print(RequestLink, ex, 96)
+            logging.exception(ex)
             self.alert.emit(str(ex))

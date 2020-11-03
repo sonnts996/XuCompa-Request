@@ -1,3 +1,5 @@
+import logging
+
 from PyQt5.QtCore import pyqtSignal, QUrl
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import QSplitter
@@ -5,6 +7,7 @@ from PyQt5.QtWidgets import QSplitter
 from xu.compa.Parapluie import Parapluie, PTabWidget, PFunction
 from xu.src.python.Module.ParamEditor import TextEditWidget, EditorType, ParamType, ParamEditor, ParamEditorConnect
 from xu.src.python.Request.Model import APIResponse, APIData, BodyType
+
 
 
 class RequestResult(PTabWidget):
@@ -83,7 +86,7 @@ class RequestResult(PTabWidget):
                                 try:
                                     content = str(self.response.content().decode('utf-8'))
                                 except Exception as ex:
-                                    print(ex)
+                                    logging.exception(ex)
                                     self.pushAlert(str(ex))
                                     content = str(self.response.content())
                         else:
@@ -127,7 +130,7 @@ class RequestResult(PTabWidget):
                         self.analysis.setData(data)
                         self.analysis.refresh()
             except Exception as ex:
-                print(RequestResult, ex, 104)
+                logging.exception(ex)
                 self.pushAlert(str(ex))
 
     def clearData(self):

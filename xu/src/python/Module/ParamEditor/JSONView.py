@@ -1,4 +1,5 @@
 import copy
+import logging
 
 from PyQt5.QtGui import QStandardItem
 from PyQt5.QtWidgets import QMenu, QAction
@@ -247,7 +248,7 @@ class JSONView:
             self.treeView.refresh()
             self.flow.add(copy.deepcopy(self.jsonData))
         except Exception as ex:
-            print(ex)
+            logging.exception(ex)
             self.treeView.error.emit(str(ex))
 
     def actionClearAll(self):

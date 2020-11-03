@@ -1,4 +1,5 @@
 import json
+import logging
 import xml.etree.ElementTree as Et
 from xml.dom import minidom
 
@@ -31,7 +32,7 @@ def jsonString(obj, onError):
         formatted_json = json.dumps(js, sort_keys=False, indent=4, ensure_ascii=False)
         return formatted_json
     except Exception as ex:
-        print(ex)
+        logging.exception(ex)
         if onError is not None:
             onError(str(ex))
         return None
@@ -44,7 +45,7 @@ def xmlString(xml, onError):
         repaired = minidom.parseString(xml)
         return '\n'.join([line for line in repaired.toprettyxml(indent='\t').split('\n') if line.strip()])
     except Exception as ex:
-        print(ex)
+        logging.exception(ex)
         if onError is not None:
             onError(str(ex))
         return None
@@ -59,7 +60,7 @@ def xmlObject(dom, onError):
             if onError is not None:
                 onError("XML Object fail to reading!")
     except Exception as ex:
-        print(ex)
+        logging.exception(ex)
         if onError is not None:
             onError(str(ex))
         return None

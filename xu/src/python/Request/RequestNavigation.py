@@ -1,3 +1,4 @@
+import logging
 import os
 
 from PyQt5 import QtGui
@@ -304,7 +305,7 @@ class RequestNavigation(PWidget):
 
     def saveDescription(self, desc, descId=None, isRemove=False):
         # read descriptions
-        xDef = Config. getRequestFolder()[1]
+        xDef = Config.getRequestFolder()[1]
         if os.path.isfile(xDef):
             file = open(xDef, "r", encoding='utf-8')
             data = file.read()
@@ -407,6 +408,6 @@ class RequestNavigation(PWidget):
             self.pushAlert("Saved!!!", Parapluie.Alert_Success)
             return True
         except Exception as ex:
-            print(RequestNavigation, ex, 401)
+            logging.exception(ex)
             self.pushAlert(str(ex))
             return False

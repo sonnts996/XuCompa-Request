@@ -1,7 +1,11 @@
+import logging
+
 from PyQt5 import Qsci
 from PyQt5.Qsci import QsciScintilla
 from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtGui import QColor, QFont, QFontMetrics, QKeyEvent
+
+
 
 
 class TextEditor(Qsci.QsciScintilla):
@@ -82,8 +86,7 @@ class TextEditor(Qsci.QsciScintilla):
                     try:
                         self.keyEvent.emit(chr(event.key()))
                     except Exception as ex:
-                        print(ex)
-                        pass
+                        logging.exception(ex)
                 else:
                     t = autoKey(self.lexerType, event.text())
                     if t:
