@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QVBoxLayout, QToolButton, QHBoxLayout, QSizePolicy
 
-from xu.compa.Parapluie import PResource, Parapluie, PHolder, PWidget
+from xu.compa.Parapluie import PResource, Parapluie, PHolder, PWidget, PClose
 
 
 class ItemHolder(PHolder):
@@ -16,10 +16,8 @@ class ItemHolder(PHolder):
         self.category = QLabel()
         self.description = QLabel()
 
-        self.closeButton = QToolButton()
-        self.closeButton.setIconSize(QSize(12, 12))
+        self.closeButton = PClose()
         self.closeButton.setFixedSize(24, 24)
-        self.closeButton.setIcon(PResource.defaultIcon(Parapluie.Icon_Cancel_Svg))
         self.closeButton.pressed.connect(self.closeRequest)
 
         label = QLabel()

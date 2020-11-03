@@ -8,3 +8,4 @@ from xu.compa.Parapluie.src.ActionWidget.PHolder import PHolder
 from xu.compa.Parapluie.src.ActionWidget.PGridWidget import PGridWidget
 from xu.compa.Parapluie.src.ActionWidget.PLabelEdit import PLabelEdit
 from xu.compa.Parapluie.src.ActionWidget.PItemDelegate import PItemDelegate
+from xu.compa.Parapluie.src.ActionWidget.PClose import PClose

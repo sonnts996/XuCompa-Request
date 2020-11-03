@@ -3,7 +3,7 @@ from PyQt5.QtCore import QSize, QTimer, Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget, QToolButton, QLabel, QSizePolicy, QDialog
 
-from xu.compa.Parapluie import Parapluie, PResource
+from xu.compa.Parapluie import Parapluie, PResource, PClose
 from xu.compa.Parapluie.src.StickyWindow.PSticky import PSticky
 
 
@@ -35,10 +35,8 @@ class PAlert(PSticky):
         else:
             self.setObjectName(Parapluie.Object_Alert_Information)
 
-        close = QToolButton()
-        close.setObjectName(Parapluie.Object_StickyWindow_FunctionButton)
-        close.setIconSize(QSize(12, 12))
-        close.setIcon(QIcon(PResource.white(Parapluie.Icon_Cancel_Svg)))
+        close = PClose()
+        close.setObjectName(Parapluie.Object_CloseButton2)
         close.pressed.connect(self.close)
         self.addWindowAction(close)
 

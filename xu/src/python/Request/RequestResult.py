@@ -80,7 +80,12 @@ class RequestResult(PTabWidget):
                             if charset is not None:
                                 content = str(self.response.content().decode(charset))
                             else:
-                                content = str(self.response.content())
+                                try:
+                                    content = str(self.response.content().decode('utf-8'))
+                                except Exception as ex:
+                                    print(ex)
+                                    self.pushAlert(str(ex))
+                                    content = str(self.response.content())
                         else:
                             content = self.response.content()
 

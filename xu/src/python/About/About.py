@@ -1,7 +1,7 @@
 from PyQt5.QtCore import Qt, QRect, QSize
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QToolButton
 
-from xu.compa.Parapluie import PSticky, Parapluie, PResource
+from xu.compa.Parapluie import PSticky, Parapluie, PResource, PClose
 from xu.src.python import Utilities
 from xu.src.python.Module.ParamEditor import ParamEditor, ParamType
 from xu.src.res.app import appInformation
@@ -20,10 +20,7 @@ class About(PSticky):
         self.tableLink.setHeaderVisible(False)
         self.tableLink.setEditable(False)
 
-        self.closeButton = QToolButton()
-        self.closeButton.setIconSize(QSize(12, 12))
-        self.closeButton.setObjectName(Parapluie.Object_StickyWindow_FunctionButton)
-        self.closeButton.setIcon(PResource.defaultIcon(Parapluie.Icon_Cancel_Svg))
+        self.closeButton = PClose()
         self.closeButton.pressed.connect(lambda: self.completeDestroy(0))
 
         self.addWindowAction(self.closeButton)

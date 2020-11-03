@@ -22,6 +22,8 @@ Object_Alert_Success: Final[str] = "Alert_Success"
 Object_OptimizeButton: Final[str] = "OptimizeButton"
 Object_NegativeButton: Final[str] = "NegativeButton"
 Object_ColorButton: Final[str] = "ColorButton"
+Object_CloseButton: Final[str] = "CloseButton"
+Object_CloseButton2: Final[str] = "CloseButton2"
 # Form
 Object_FormLabel: Final[str] = "FormLabel"
 

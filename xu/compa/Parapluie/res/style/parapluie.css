@@ -230,17 +230,18 @@ QTableView QWidget,
 QColumnView QWidget {
     background: transparent;
 }
-QTreeView QScrollBar:horizontal ,
-QListView QScrollBar:horizontal ,
-QTableView QScrollBar:horizontal ,
+
+QTreeView QScrollBar:horizontal,
+QListView QScrollBar:horizontal,
+QTableView QScrollBar:horizontal,
 QColumnView QScrollBar:horizontal {
     height: 4px;
     margin: 0 8px 0 8px;
 }
 
-QTreeView QScrollBar:vertical ,
-QListView QScrollBar:vertical ,
-QTableView QScrollBar:vertical ,
+QTreeView QScrollBar:vertical,
+QListView QScrollBar:vertical,
+QTableView QScrollBar:vertical,
 QColumnView QScrollBar:vertical {
     width: 4px;
     margin: 8px 0 8px 0;
@@ -816,4 +817,22 @@ QTabWidget::tab-bar {
     border: none;
     border-radius: 0;
     background: white;
+}
+
+#CloseButton2,
+#CloseButton {
+    background: transparent;
+    height: 24px;
+    width: 24px;
+    border-radius: 2px;
+    margin: 4px;
+}
+
+
+#CloseButton:hover {
+    background: #E57373;
+}
+
+#CloseButton2:hover {
+    background: transparent;
 }
