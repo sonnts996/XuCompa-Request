@@ -31,7 +31,12 @@ class JSONView:
             item.setData(self.getItemData(obj, "key", itemParent))
             if obj.isObject():
                 self.createJsonUi(obj.value, item, obj)
-                parent.appendRow(item)
+                if isinstance(obj.value, Jso.JList):
+                    value = QStandardItem(str(obj.value.count()))
+                    value.setEditable(False)
+                    parent.appendRow([item, value])
+                else:
+                    parent.appendRow(item)
             else:
                 value = QStandardItem(obj.getValueStr())
                 value.setEditable(not (obj.isObject() and obj.isEmpty()) and self.treeView.editable)
@@ -212,6 +217,8 @@ class JSONView:
             self.actionClearAll()
         elif action == deleteKeyAction:
             self.actionDelete(par, obj)
+        elif action == duplicateAction:
+            self.actionDuplicate(par, obj)
         elif action == addValueAction:
             self.actionAddValue(par, obj)
         elif action == addObjectAction:
