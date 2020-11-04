@@ -17,6 +17,7 @@ class JSONViewer(QSplitter):
 
         self.leftWidget = JSONNavigation()
         self.leftWidget.currentChange.connect(self.fileSelected)
+        self.leftWidget.alert.connect(lambda txt: self.alert.emit(txt, Parapluie.Alert_Error, None, None))
         self.addWidget(self.leftWidget)
 
         self.jsonEdit = TextEditWidget()

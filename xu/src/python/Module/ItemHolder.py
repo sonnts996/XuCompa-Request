@@ -43,7 +43,7 @@ class ItemHolder(PHolder):
         self.category.setObjectName(Parapluie.Object_Item_Category)
 
         self.description.setVisible(False)
-        self.description.setWordWrap(True)
+        self.description.setWordWrap(False)
         self.description.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.description.setObjectName(Parapluie.Object_Item_Description)
 

@@ -12,6 +12,7 @@ from xu.src.python.Utilities import *
 
 class JSONNavigation(PWidget):
     currentChange = pyqtSignal()
+    alert = pyqtSignal(str)
 
     def __init__(self):
         super().__init__()
@@ -154,17 +155,21 @@ class JSONNavigation(PWidget):
         self.currentChange.emit()
 
     def onItemSelected(self, data):
-        if self.currentFile != data:
-            self.currentFile = data
-            self.currentChange.emit()
+        if os.path.isfile(data.getPath()):
+            if self.currentFile != data:
+                self.currentFile = data
+                self.currentChange.emit()
 
-        if isinstance(data, XFile):
-            for item in self.dataList:
-                if item.file == data:
-                    item.selected = 1
-                else:
-                    item.selected = 0
-        self.listAdapter.refresh()
+            if isinstance(data, XFile):
+                for item in self.dataList:
+                    if item.file == data:
+                        item.selected = 1
+                    else:
+                        item.selected = 0
+            self.listAdapter.refresh()
+        else:
+            self.alert.emit("File not found")
+            self.onItemClosed(data)
 
     def onItemClosed(self, data):
         if self.currentFile == data:
