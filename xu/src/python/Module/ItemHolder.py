@@ -74,18 +74,18 @@ class ItemHolder(PHolder):
 
     def setTitle(self, title: str):
         self.ttl = title.upper()
-        self.title.setText(self.updateText(self.ttl, self.title.width(), 10))
+        self.parentResized()
         self.title.setToolTip(title)
 
     def setCategory(self, category: str):
         self.cate = category
-        self.category.setText(self.updateText(self.cate, self.category.width(), 7))
+        self.parentResized()
         self.category.setVisible(category != "")
         self.category.setToolTip(category)
 
     def setDescription(self, t):
         self.desc = t
-        self.description.setText(self.updateText(self.desc, self.description.width(), 7))
+        self.parentResized()
         self.description.setVisible(t != "")
         self.description.setToolTip(t)
 
