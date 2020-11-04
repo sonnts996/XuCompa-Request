@@ -18,6 +18,7 @@ class TextEditWidget(PWidget):
     alert = pyqtSignal(str, str, object, object)
     syncRequest = pyqtSignal(object)
     editorTypeChanged = pyqtSignal(object)
+    saveDataDone = pyqtSignal(str)
 
     def __init__(self, editType: EditorType = EditorType.Manual, save: bool = True, sync: bool = True):
         super().__init__()
@@ -254,10 +255,12 @@ class TextEditWidget(PWidget):
                 name = QFileDialog.getSaveFileName(self, 'Save file', self.currentFile.getPath(),
                                                    self.getFileExtension())
                 if name[0] != "":
-                    self.currentFile.setPath(name)
-                    self.save(self.currentFile)
+                    self.currentFile.setPath(name[0])
+                    if self.save(self.currentFile) is not None:
+                        self.saveDataDone.emit(name[0])
             else:
-                self.save(self.currentFile)
+                if self.save(self.currentFile) is not None:
+                    self.saveDataDone.emit(self.currentFile.getPath())
 
     def save(self, f: XFile):
         try:
@@ -266,6 +269,7 @@ class TextEditWidget(PWidget):
             file.close()
             f.unsavedData = ""
             self.pushAlert("Saved: " + f.getPath(), Parapluie.Alert_Information)
+            return f.getPath()
         except Exception as ex:
             logging.exception(ex)
             self.pushAlert(str(ex))

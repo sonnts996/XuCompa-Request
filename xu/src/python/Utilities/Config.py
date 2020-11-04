@@ -31,6 +31,10 @@ def getAPILinkFile():
     return os.path.join(getDataFolder(), "api_link.json")
 
 
+def getViewerRecentFile():
+    return os.path.join(getDataFolder(), "view_recent.txt")
+
+
 def getConfig():
     if os.path.isfile(getConfigFile()):
         try:

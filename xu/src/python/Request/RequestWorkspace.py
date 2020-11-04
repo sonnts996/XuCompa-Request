@@ -167,7 +167,10 @@ class RequestWorkspace(QWidget):
         if self.currentFile is None:
             self.currentFile = file
         elif self.currentFile != file:
-            data = APIData()
+            if isinstance(self.currentFile.unsavedData, APIData):
+                data = self.currentFile.unsavedData
+            else:
+                data = APIData()
             param = copy.deepcopy(self.param.getData(True))
             if param is not None:
                 data.setConfig(param)
@@ -191,6 +194,7 @@ class RequestWorkspace(QWidget):
             data2.construct(self.currentFile.unsavedData.data)
 
         self.param.setConfig(data2.parseConfig())
+        self.result.clearData()
         self.result.setResponse(data2)
 
         xash = XashHelp.path2Xash(self.currentFile.getPath())

@@ -59,6 +59,53 @@ class JSONNavigation(PWidget):
 
         self.listAdapter = JsonAdapter(self, self.listDataWidget, self.dataList, self.onItemSelected, self.onItemClosed)
 
+        self.loadFile()
+
+    def loadFile(self):
+        if os.path.isfile(Config.getViewerRecentFile()):
+            file = open(Config.getViewerRecentFile(), 'r', encoding='utf-8')
+            data = file.read().splitlines()
+            for d in data:
+                if d not in self.dataSource:
+                    self.dataSource.insert(0, XFile(d))
+            self.updateDataList(self.dataTemp, self.dataSource)
+            file.close()
+        else:
+            file = open(Config.getViewerRecentFile(), 'w', encoding='utf-8')
+            file.close()
+
+    def addRecentFile(self, f: XFile):
+        if os.path.isfile(Config.getViewerRecentFile()):
+            file = open(Config.getViewerRecentFile(), 'r', encoding='utf-8')
+            data = file.read().splitlines()
+            file.close()
+            if f.getPath() not in data:
+                data.append(f.getPath())
+            else:
+                data.remove(f.getPath())
+                data.append(f.getPath())
+            file = open(Config.getViewerRecentFile(), 'w', encoding='utf-8')
+            file.write("\n".join(data))
+            file.close()
+        else:
+            file = open(Config.getViewerRecentFile(), 'a+', encoding='utf-8')
+            file.write(f.getPath() + "\n")
+            file.close()
+
+    def removeFile(self, f: XFile):
+        if os.path.isfile(Config.getViewerRecentFile()):
+            file = open(Config.getViewerRecentFile(), 'r', encoding='utf-8')
+            data = file.read().splitlines()
+            file.close()
+            if f.getPath() in data:
+                data.remove(f.getPath())
+                file = open(Config.getViewerRecentFile(), 'w', encoding='utf-8')
+                file.write("\n".join(data))
+                file.close()
+        else:
+            file = open(Config.getViewerRecentFile(), 'a+', encoding='utf-8')
+            file.close()
+
     def updateDataList(self, lstNew, lstSrc):
         self.dataList.clear()
         # unsaved item
@@ -133,6 +180,8 @@ class JSONNavigation(PWidget):
         if data in self.dataTemp:
             self.dataTemp.remove(data)
 
+        self.removeFile(data)
+
         self.searchFile(self.searchBar.text())
 
     def openFile(self):
@@ -148,9 +197,17 @@ class JSONNavigation(PWidget):
             config["viewer"]["last_open"] = os.path.dirname(name[0])
             Config.updateConfig(config)
 
-            file = XFile(name[0])
-            self.currentFile = file
-            self.dataSource.insert(0, file)
-            self.updateDataList(self.dataTemp, self.dataSource)
-            self.listAdapter.refresh()
-            self.currentChange.emit()
+            self.fileChanged(name[0])
+
+    def fileChanged(self, path: str):
+        file = XFile(path)
+        self.currentFile = file
+        if path in self.dataTemp:
+            self.dataTemp.remove(path)
+        if path in self.dataSource:
+            self.dataSource.remove(file)
+        self.addRecentFile(file)
+        self.loadFile()
+        self.updateDataList(self.dataTemp, self.dataSource)
+        self.listAdapter.refresh()
+        self.currentChange.emit()

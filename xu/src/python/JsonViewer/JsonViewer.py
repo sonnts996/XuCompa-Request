@@ -22,6 +22,7 @@ class JSONViewer(QSplitter):
         self.jsonEdit = TextEditWidget()
         self.jsonEdit.setObjectName(Parapluie.Object_Editor_Flat)
         self.jsonEdit.alert.connect(lambda txt, tpe, button1, button2: self.alert.emit(txt, tpe, button1, button2))
+        self.jsonEdit.saveDataDone.connect(self.leftWidget.fileChanged)
 
         self.addWidget(self.jsonEdit)
 
