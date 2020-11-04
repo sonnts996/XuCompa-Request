@@ -370,7 +370,6 @@ PLabelEdit QLineEdit {
 
 PLabelEdit QLabel {
     background: transparent;
-    color: white;
 }
 
 PLabelEdit QLineEdit {
