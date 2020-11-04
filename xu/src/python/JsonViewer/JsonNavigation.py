@@ -155,7 +155,7 @@ class JSONNavigation(PWidget):
         self.currentChange.emit()
 
     def onItemSelected(self, data):
-        if os.path.isfile(data.getPath()):
+        if os.path.isfile(data.getPath()) or data.getPath().startswith("Unsaved\\"):
             if self.currentFile != data:
                 self.currentFile = data
                 self.currentChange.emit()

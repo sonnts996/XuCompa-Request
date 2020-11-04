@@ -1,9 +1,9 @@
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QLabel, QVBoxLayout, QToolButton, QHBoxLayout, QSizePolicy
+from PyQt5.QtWidgets import QLabel, QVBoxLayout, QHBoxLayout, QSizePolicy
 
-from xu.compa.Parapluie import PResource, Parapluie, PHolder, PWidget, PClose
+from xu.compa.Parapluie import Parapluie, PHolder, PWidget, PClose
 
 
 class ItemHolder(PHolder):
@@ -30,27 +30,28 @@ class ItemHolder(PHolder):
         closeLayout = QHBoxLayout()
         closeLayout.setAlignment(Qt.AlignTop)
         closeLayout.addWidget(label, alignment=Qt.AlignLeft)
-        closeLayout.addWidget(self.category, alignment=Qt.AlignLeft | Qt.AlignTop)
+        closeLayout.addWidget(self.category, alignment=Qt.AlignLeft)
         closeLayout.addStretch()
         closeLayout.addWidget(self.closeButton, alignment=Qt.AlignRight)
 
         self.title.setWordWrap(True)
         self.title.setObjectName(Parapluie.Object_Item_Tittle)
+        self.title.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
         self.category.setVisible(False)
         self.category.setFixedHeight(20)
-        self.category.setAlignment(Qt.AlignVCenter)
+        self.category.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.category.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
         self.category.setObjectName(Parapluie.Object_Item_Category)
 
         self.description.setVisible(False)
-        self.description.setWordWrap(False)
-        self.description.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.description.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         self.description.setObjectName(Parapluie.Object_Item_Description)
 
         layout = QVBoxLayout()
         layout.setSpacing(2)
         layout.setAlignment(Qt.AlignTop)
-        layout.addLayout(closeLayout)
+        layout.addLayout(closeLayout, 1)
         layout.addWidget(self.title)
         layout.addWidget(self.description)
         self.setLayout(layout)
@@ -73,18 +74,18 @@ class ItemHolder(PHolder):
 
     def setTitle(self, title: str):
         self.ttl = title.upper()
-        self.title.setText(self.updateText(self.ttl, self.title.width()))
+        self.title.setText(self.updateText(self.ttl, self.title.width(), 10))
         self.title.setToolTip(title)
 
     def setCategory(self, category: str):
         self.cate = category
-        self.category.setText(self.updateText(self.cate, self.category.width()))
+        self.category.setText(self.updateText(self.cate, self.category.width(), 7))
         self.category.setVisible(category != "")
         self.category.setToolTip(category)
 
     def setDescription(self, t):
         self.desc = t
-        self.description.setText(self.updateText(self.desc, self.description.width()))
+        self.description.setText(self.updateText(self.desc, self.description.width(), 7))
         self.description.setVisible(t != "")
         self.description.setToolTip(t)
 
@@ -110,13 +111,15 @@ class ItemHolder(PHolder):
         self.onClose = onClose
 
     def parentResized(self):
-        self.description.setText(self.updateText(self.desc, self.parent.width()))
-        self.category.setText(self.updateText(self.cate, self.parent.width()))
-        self.title.setText(self.updateText(self.ttl, self.parent.width()))
+        self.description.setText(self.updateText(self.desc, self.parent.width(), 7))
+        self.category.setText(self.updateText(self.cate, self.parent.width(), 7))
+        self.title.setText(self.updateText(self.ttl, self.parent.width(), 10))
 
-    def updateText(self, text, width):
+        self.setFixedWidth(self.parent.width() - 15)
+
+    def updateText(self, text, width, unit):
         if " " not in text:
-            numChar = int(width / 10)
+            numChar = int(width / unit)
             if numChar <= 0:
                 numChar = 1
             if len(text) > numChar:
