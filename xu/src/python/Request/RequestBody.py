@@ -30,6 +30,7 @@ class RequestBody(PWidget):
         self.layout().setContentsMargins(0, 8, 0, 0)
 
     def getData(self):
+        self.editor.syncJson()
         if self.editor.editType == EditorType.JSON:
             return self.editor.text(), BodyType.JSON
         elif self.editor.editType == EditorType.XML:
