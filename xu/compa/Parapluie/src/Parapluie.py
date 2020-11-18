@@ -3,7 +3,10 @@ from typing import Final
 # Widget
 Object_Test: Final[str] = "Test"
 Object_Raised: Final[str] = "Raised"
+Object_Raised_Off: Final[str] = "Raised_Off"
 Object_Header: Final[str] = "Header"
+Object_TopHeader: Final[str] = "TopHeader"
+Object_ColorComboBox: Final[str] = "ColorComboBox"
 Object_Editor: Final[str] = "Editor"
 Object_Editor_Header: Final[str] = "Editor_Header"
 Object_Editor_Flat: Final[str] = "Editor_Flat"
@@ -32,6 +35,7 @@ Object_OutlineBox: Final[str] = "OutlineBox"
 
 # Item
 Object_Item: Final[str] = "Item"
+Object_Item2: Final[str] = "Item2"
 Object_Item_Category: Final[str] = "Category"
 Object_Item_Tittle: Final[str] = "Tittle"
 Object_Item_Description: Final[str] = "Description"

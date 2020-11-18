@@ -1,7 +1,6 @@
 from PyQt5.QtWidgets import QListWidget
 
-from xu.compa.Parapluie.src.ActionWidget import PWidget
-from xu.compa.Parapluie.src.Adapter import PListAdapter
+from xu.compa.Parapluie import Parapluie, PWidget, PListAdapter
 from xu.src.python.Model import ItemModel, XFile
 from xu.src.python.Module import ItemHolder, ItemHeader
 
@@ -23,7 +22,7 @@ class JsonAdapter(PListAdapter):
     def getWidget(self, position: int, w: ItemHolder = None):
         i: ItemModel = self.item(position)
         if isinstance(i.file, XFile):
-            w = ItemHolder(self.parent)
+            w = ItemHolder(self.parent, True)
             x: XFile = i.file
             w.setData(x)
             w.setText(x.name()[0], x.parent(), x.getPath(), i.selected > 0)

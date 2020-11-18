@@ -18,6 +18,7 @@ class ItemGridHolder(PWidget):
         super().__init__()
         self.setStyleSheet("""QWidget{
                                 background: white;
+                                border-radius: 10px;
                                 }
                                 QWidget:hover{
                                 background:#ece1dd;
@@ -55,6 +56,7 @@ class ItemGridHolder(PWidget):
             c = ord(title[0]) % 15
             self.setStyleSheet("""  QWidget{
                                 background: %s;
+                                border-radius: 10px;
                                 }
                                 QWidget:hover{
                                 background:#ece1dd;

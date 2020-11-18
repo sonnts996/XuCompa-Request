@@ -1,3 +1,4 @@
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QVBoxLayout, QSplitter
 
 from xu.compa.Parapluie import PWidget, Parapluie
@@ -19,6 +20,7 @@ class RequestBody(PWidget):
 
         l3 = QSplitter()
         l3.setObjectName(Parapluie.Object_QSplitter)
+        l3.setOrientation(Qt.Horizontal)
         l3.addWidget(self.editor)
         l3.addWidget(self.paramEditor)
 

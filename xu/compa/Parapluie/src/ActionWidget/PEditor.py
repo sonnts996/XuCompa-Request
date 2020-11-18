@@ -6,8 +6,8 @@ from PyQt5.QtWidgets import QLineEdit
 class PEditor(QLineEdit):
     focusSignal = pyqtSignal(bool)
 
-    def __init__(self, parent):
-        super().__init__(parent)
+    def __init__(self):
+        super().__init__()
 
     def focusInEvent(self, a0: QtGui.QFocusEvent) -> None:
         super(PEditor, self).focusInEvent(a0)

@@ -36,6 +36,7 @@ class PMessage(PSticky):
         widget = QWidget()
         widget.setLayout(layout)
         widget.setContentsMargins(0, 8, 0, 0)
+        widget.setObjectName(Parapluie.Object_Raised_Off)
         self.setCentralWidget(widget)
 
     def addButton(self, text, tpe, action=None, data=None):

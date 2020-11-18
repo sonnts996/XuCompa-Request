@@ -41,6 +41,7 @@ class JSONViewer(QSplitter):
         self.addWidget(widget)
 
         self.setChildrenCollapsible(False)
+        self.setObjectName(Parapluie.Object_QSplitter)
 
         self.leftWidget.newFile()
         self.jsonEdit.setEditorType(EditorType.JSON)

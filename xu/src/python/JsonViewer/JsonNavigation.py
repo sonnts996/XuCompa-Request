@@ -38,13 +38,16 @@ class JSONNavigation(PWidget):
         topBar.addWidget(self.addButton)
 
         self.listDataWidget = QListWidget()
-        self.listDataWidget.setObjectName(Parapluie.Object_Raised)
+        self.listDataWidget.setObjectName(Parapluie.Object_Raised_Off)
         self.listDataWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.listDataWidget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.listDataWidget.horizontalScrollBar().setEnabled(False)
+        self.listDataWidget.setSpacing(3)
 
         layout = QVBoxLayout()
+        layout.setContentsMargins(8, 8, 8, 8)
         layout.addLayout(topBar)
+        layout.addSpacing(8)
         layout.addWidget(self.listDataWidget)
 
         self.setObjectName(Parapluie.Object_Raised)

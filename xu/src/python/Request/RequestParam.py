@@ -1,15 +1,15 @@
 from PyQt5.QtCore import pyqtSignal, Qt, QSize, QRect, QPoint
 from PyQt5.QtWidgets import QVBoxLayout, QLineEdit, QHBoxLayout, QFormLayout, QTextEdit, QSizePolicy, QToolButton, \
-    QApplication
+    QApplication, QSplitter, QComboBox
 
-from xu.compa.Parapluie import PWidget, Parapluie, PTabWidget, PComboBox, PResource
+from xu.compa.Parapluie import PWidget, Parapluie, PTabWidget, PComboBox, PResource, PEditor
 from xu.src.python.Module.ParamEditor import ParamEditor, ParamType
 from xu.src.python.Request import RequestBody, RequestLink
 from xu.src.python.Request.Model import APIConfig, APILink
 from xu.src.python.Utilities import listView, formLabel
 
 
-class RequestParam(PWidget):
+class RequestParam(QSplitter):
     alert = pyqtSignal(str, str, object, object)
 
     def __init__(self):
@@ -26,6 +26,7 @@ class RequestParam(PWidget):
         self.apiType.addItem("DELETE")
         self.apiType.addItem("PATCH")
         self.apiType.addItem("OPTIONS")
+        self.apiType.setObjectName(Parapluie.Object_ColorComboBox)
 
         self.apiURL = QLineEdit()
         self.apiURL.setPlaceholderText("API..")
@@ -44,6 +45,7 @@ class RequestParam(PWidget):
 
         self.apiLink = PComboBox()
         self.apiLink.setView(listView())
+        self.apiLink.setSizeAdjustPolicy(QComboBox.AdjustToMinimumContentsLength)
 
         apiBar = QHBoxLayout()
         apiBar.setSpacing(6)
@@ -51,16 +53,11 @@ class RequestParam(PWidget):
         apiBar.addWidget(self.apiLink, stretch=1)
         apiBar.addWidget(addLink)
 
-        self.description = QTextEdit()
-        self.description.setMinimumHeight(100)
-        self.description.setMaximumHeight(100)
-
         l2 = QFormLayout()
         l2.setVerticalSpacing(6)
         l2.setHorizontalSpacing(10)
 
         l2.addRow(formLabel("API Link:"), apiBar)
-        l2.addRow(formLabel("Description:", False), self.description)
 
         # line 3
         self.bodyWidget = RequestBody()
@@ -79,14 +76,47 @@ class RequestParam(PWidget):
         self.tab.addTab(self.paramWidget, "Param")
         self.tab.addTab(self.bodyWidget, "Body")
 
-        layout = QVBoxLayout()
-        layout.setAlignment(Qt.AlignTop)
-        layout.addLayout(l1)
-        layout.addLayout(l2)
-        layout.addWidget(self.tab)
-        self.setLayout(layout)
+        lLeft = QVBoxLayout()
+        lLeft.setContentsMargins(0, 0, 0, 0)
+        lLeft.setAlignment(Qt.AlignTop)
+        lLeft.addLayout(l1)
+        lLeft.addLayout(l2)
+        lLeft.addSpacing(10)
+        lLeft.addWidget(self.tab)
 
-        self.setObjectName(Parapluie.Object_Raised)
+        wLeft = PWidget()
+        wLeft.setLayout(lLeft)
+        wLeft.setObjectName(Parapluie.Object_Raised)
+
+        self.description = QTextEdit()
+        self.description.setMinimumHeight(300)
+        self.description.setMaximumHeight(300)
+
+        self.categories = PEditor()
+
+        form = QFormLayout()
+        form.setVerticalSpacing(6)
+        form.setHorizontalSpacing(6)
+
+        form.addRow(formLabel("Categories:", False), self.categories)
+        form.addRow(formLabel("Description:", False), self.description)
+
+        lRight = QVBoxLayout()
+        lRight.setContentsMargins(0, 0, 10, 0)
+        lRight.addLayout(form)
+        lRight.addStretch()
+        lRight.addStretch()
+
+        wRight = PWidget()
+        wRight.setLayout(lRight)
+        wRight.setObjectName(Parapluie.Object_Raised)
+
+        self.addWidget(wLeft)
+        self.addWidget(wRight)
+        self.setObjectName(Parapluie.Object_QSplitter)
+        self.setChildrenCollapsible(False)
+        self.setStretchFactor(0, 4)
+        self.setStretchFactor(1, 3)
 
         self.dialog = RequestLink(self, QRect(QPoint(0, 0), QApplication.primaryScreen().size()))
         self.dialog.getData()

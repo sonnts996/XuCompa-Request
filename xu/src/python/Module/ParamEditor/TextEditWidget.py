@@ -37,7 +37,7 @@ class TextEditWidget(PWidget):
             self.title.setMaximumWidth(300)
             self.title.setFixedHeight(iconSize)
             self.title.setMaximumHeight(iconSize)
-            # self.title.setStyleSheet("QLabel{color:white; font-size:16px}")
+            self.title.setStyleSheet("QLabel{color:#424242; font-size:16px}")
             self.title.setText("Untitled")
             tool.addWidget(self.title)
 

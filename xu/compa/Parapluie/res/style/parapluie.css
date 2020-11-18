@@ -9,7 +9,8 @@ QLabel {
     color: #424242;
 }
 
-QListWidget {
+QListWidget,
+#Raised_Off QAbstractItemView {
     background: transparent;
 }
 
@@ -110,8 +111,8 @@ QLineEdit,
 QTextEdit {
     border-radius: 15px;
     height: 32px;
-    border: 1px solid #efefef;
-    background: #efefef;
+    border: 1px solid #cccccc;
+    background: #FFFFFF;
     padding: 0 8px;
     font-size: 14px;
 }
@@ -128,7 +129,7 @@ QScrollBar {
 
 QScrollBar:horizontal,
 QScrollBar:vertical {
-    background-color: transparent;
+    background-color: white;
     border: none;
     outline: none;
 }
@@ -144,14 +145,14 @@ QScrollBar:vertical {
 }
 
 QScrollBar::add-line {
-    background-color: transparent;
+    background-color: white;
     border: none;
     outline: none;
 }
 
 
 QScrollBar::sub-line {
-    background-color: transparent;
+    background-color: white;
     border: none;
     outline: none;
 }
@@ -167,14 +168,14 @@ QScrollBar::handle {
 
 QScrollBar::add-page, QScrollBar::sub-page {
     border-radius: 8px;
-    background: transparent;
+    background: white;
     border: none;
     outline: none;
 }
 
 
 QScrollBar::up-arrow, QScrollBar::down-arrow {
-    background: transparent;
+    background: white;
     border: none;
     outline: none;
 }
@@ -183,7 +184,7 @@ QTreeView,
 QListView,
 QTableView,
 QColumnView {
-    background: white;
+    background: transparent;
     show-decoration-selected: 1;
 }
 
@@ -308,6 +309,14 @@ QAbstractItemView::item:selected:active {
     color: white;
 }
 
+QListWidget::item:pressed,
+QListWidget::item:hover,
+QListWidget::item:selected,
+QListWidget::item:selected:hover,
+QListWidget::item:selected:active {
+    background-color: transparent;
+}
+
 QTreeView QLineEdit,
 QListView QLineEdit,
 QTableView QLineEdit,
@@ -348,6 +357,7 @@ QHeaderView::section:last {
 }
 
 QAbstractItemView {
+    background: white;
     alternate-background-color: #f0f0f0;
     padding: 0;
 }
@@ -379,8 +389,8 @@ PLabelEdit QLineEdit {
 QComboBox {
     border-radius: 15px;
     height: 32px;
-    border: 1px solid #efefef;
-    background: #efefef;
+    border: 1px solid #cccccc;
+    background: #FFFFFF;
     padding: 0 8px;
     font-size: 14px;
 }
@@ -454,7 +464,7 @@ QTabBar, QTabWidget, QTabWidget QStackedWidget {
 QTabBar {
     qproperty-drawBase: 0;
     background: #b1bee1;
-    alignment: right;
+    alignment: left;
 }
 
 QTabBar::tab {
@@ -510,12 +520,12 @@ QTabBar::close-button:hover::selected {
 }
 
 QTabWidget::tab-bar {
-    alignment: right;
+    alignment: left;
     padding-right: 50px;
 }
 
 
-QTabWidget QSpinBox{
+QTabWidget QSpinBox {
     border-radius: 10px;
     border: 1px solid #4a70b6;
     background: white;
@@ -536,11 +546,16 @@ QTabWidget QSpinBox{
     min-width: 30px;
 }
 
+#Raised_Off {
+    background: transparent;
+    min-width: 30px;
+}
+
 /** sticky box  */
 
 #StickyWindow {
     border: 1px solid #dddddd;
-    /*background: #efefef;*/
+    background: #FFFFFF;
 }
 
 #Alert_Error,
@@ -673,30 +688,45 @@ QTabWidget QSpinBox{
     background: #628cd7;
 }
 
-#Item {
+#Item,
+#Item2 {
     background: white;
-    border-bottom: 1px solid #efefef;
+    /*border-bottom: 1px solid #efefef;*/
+    border-radius: 15px;
 }
 
-#Item:hover {
-    background: #f0f1f6;
+#Item2 {
+    background: #f8f4f5;
+}
+
+#Item:hover,
+#Item2:hover {
+    background: #efd0d6;
 }
 
 #Item QToolButton:hover,
 #Item QToolButton:pressed,
-#Item QToolButton:selected {
+#Item QToolButton:selected,
+#Item2 QToolButton:hover,
+#Item2 QToolButton:pressed,
+#Item2 QToolButton:selected {
     background: #E57373;
 }
 
-#Item #Category {
+#Item #Category,
+#Item2 #Category {
     border: none;
-    background: transparent;
-    color: #b1bee1;
+    background: #7389ae;
+    border-radius: 5px;
+    color: #FFFFFF;
     font-weight: bold;
     font-size: 11px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
-#Item #Tittle {
+#Item #Tittle,
+#Item2 #Tittle {
     color: #424242;
     border: none;
     background: transparent;
@@ -704,7 +734,8 @@ QTabWidget QSpinBox{
     font-size: 12px;
 }
 
-#Item #Description {
+#Item #Description,
+#Item2 #Description {
     border: none;
     background: transparent;
     color: gray;
@@ -713,19 +744,21 @@ QTabWidget QSpinBox{
 }
 
 
-#Item:disabled {
-    background: #fdf5fd;
+#Item:disabled,
+#Item2:disabled {
+    background: #d1d7f6;
 }
 
 
 #ItemHeader {
-    background: #A5ABBD;
-    color: white;
+    background: transparent;
+    color: #424242;
+    font-weight: bold;
 }
 
 #ItemHeader QLabel {
     background: transparent;
-    color: white;
+    color: #424242;
 }
 
 
@@ -744,7 +777,7 @@ QTabWidget QSpinBox{
 
 #FormLabel {
     font-size: 14px;
-    padding: 8px;
+    padding: 4px;
 }
 
 #QSplitter {
@@ -840,4 +873,26 @@ QTabWidget QSpinBox{
 
 #CloseButton2:hover {
     background: transparent;
+}
+
+#TopHeader {
+    background: white;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+#ColorComboBox {
+    border-radius: 15px;
+    height: 32px;
+    border: 1px solid #4a70b6;
+    background: #4a70b6;
+    padding: 0 8px;
+    font-size: 14px;
+    color: #FFFFFF;
+}
+
+#ColorComboBox::down-arrow {
+    image: url(":icons_white/keyboard_arrow_down.svg");
+    height: 20px;
+    width: 20px;
 }

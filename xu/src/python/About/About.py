@@ -30,6 +30,7 @@ class About(PSticky):
 
         widget = QWidget()
         widget.setLayout(layout)
+        widget.setObjectName(Parapluie.Object_Raised_Off)
 
         self.setCentralWidget(widget)
         self.setWindowTitle("XuCompa - Request")

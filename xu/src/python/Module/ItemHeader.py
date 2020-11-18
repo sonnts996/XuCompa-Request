@@ -5,7 +5,7 @@ from xu.compa.Parapluie.src.ActionWidget import PHolder
 
 
 class ItemHeader(PHolder):
-    def __init__(self, objName= Parapluie.Object_ItemHeader):
+    def __init__(self, objName=Parapluie.Object_ItemHeader):
         super().__init__()
         self.label = QLabel()
         self.setObjectName(objName)

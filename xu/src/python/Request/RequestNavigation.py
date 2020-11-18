@@ -27,8 +27,8 @@ class RequestNavigation(PWidget):
 
     def __init__(self):
         super().__init__()
-        self.setMaximumWidth(600)
-        self.setObjectName(Parapluie.Object_Raised)
+        # self.setMaximumWidth(600)
+        self.setObjectName(Parapluie.Object_Raised_Off)
 
         self.backButton = QToolButton()
         self.backButton.setIcon(PResource.defaultIcon(Parapluie.Icon_Left_Arrow_Svg))
@@ -57,13 +57,15 @@ class RequestNavigation(PWidget):
         topBar.addWidget(self.addButton)
 
         self.listDataWidget = QListWidget()
-        self.listDataWidget.setObjectName(Parapluie.Object_Raised)
+        self.listDataWidget.setContentsMargins(0, 0, 0, 0)
+        # self.listDataWidget.setObjectName(Parapluie.Object_Raised)
         self.listDataWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.listDataWidget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.listDataWidget.horizontalScrollBar().setEnabled(False)
+        self.listDataWidget.setSpacing(3)
 
         self.gridData = PGridWidget(2)
-        self.gridData.setObjectName(Parapluie.Object_Raised)
+        # self.gridData.setObjectName(Parapluie.Object_Raised)
         self.gridData.setContentsMargins(0, 0, 0, 0)
         self.gridData.setHorizontalSpacing(5)
         self.gridData.setVerticalSpacing(5)
@@ -79,6 +81,7 @@ class RequestNavigation(PWidget):
         layout = QVBoxLayout()
         layout.addLayout(topBar)
         layout.addWidget(self.stacked)
+        layout.setContentsMargins(8, 8, 0, 8)
 
         self.setLayout(layout)
 

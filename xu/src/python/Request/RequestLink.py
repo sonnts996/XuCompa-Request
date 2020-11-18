@@ -61,6 +61,7 @@ class RequestLink(PSticky):
 
         widget = QWidget()
         widget.setLayout(layout)
+        widget.setObjectName(Parapluie.Object_Raised_Off)
         self.setCentralWidget(widget)
         self.setWindowTitle("API Link define")
         Utilities.Style.applyWindowIcon(self)

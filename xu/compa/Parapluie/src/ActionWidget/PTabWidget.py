@@ -15,7 +15,7 @@ class PTabWidget(QTabWidget):
         self.sizeBox = QSpinBox()
         self.sizeBox.setVisible(False)
         self.sizeBox.valueChanged.connect(self.sizeChanged)
-        self.setCornerWidget(self.sizeBox, Qt.TopLeftCorner)
+        self.setCornerWidget(self.sizeBox, Qt.TopRightCorner)
 
     def wheelEvent(self, *args, **kwargs):
         pass

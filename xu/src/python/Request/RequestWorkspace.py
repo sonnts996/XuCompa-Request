@@ -9,58 +9,57 @@ from PyQt5.QtWidgets import QToolButton, QHBoxLayout, QVBoxLayout, QWidget, QApp
     QCompleter, QStyledItemDelegate
 
 import xu.src.python.Request.HTTP.HTTPRequest as Request
-from xu.compa.Parapluie import PResource, Parapluie, PLabelEdit
+from xu.compa.Parapluie import PResource, Parapluie, PLabelEdit, PFunction, PWidget
 from xu.compa.xhash import XashHelp
 from xu.src.python import Utilities
 from xu.src.python.Model.XFile import XFile
-from xu.src.python.Module import ItemHeader
 from xu.src.python.Request import RequestParam, RequestResult
 from xu.src.python.Request.Model import APIData, APIResponse
 
 
-class RequestWorkspace(QWidget):
+class RequestWorkspace(PWidget):
     alert = pyqtSignal(str, str, object, object)
 
     def __init__(self, window):
         super().__init__()
-        self.setObjectName(Parapluie.Object_Raised)
+
+        self.param = RequestParam()
+        self.param.alert.connect(lambda a, b, c, d: self.alert.emit(a, b, c, d))
+
+        self.result = RequestResult()
+        self.result.alert.connect(lambda a, b, c, d: self.alert.emit(a, b, c, d))
 
         clearButton = QToolButton()
         clearButton.setText("Clear")
         clearButton.setToolTip("Clear (Ctrl+D)")
-        clearButton.setIcon(PResource.invertIcon(Parapluie.Icon_Clear_All_Svg))
+        clearButton.setIcon(PResource.defaultIcon(Parapluie.Icon_Clear_All_Svg))
         clearButton.setFixedSize(36, 36)
         clearButton.pressed.connect(self.clearAll)
 
         saveButton = QToolButton()
         saveButton.setText("Save")
         saveButton.setToolTip("Save (Ctrl+S)")
-        saveButton.setIcon(PResource.invertIcon(Parapluie.Icon_Save_Svg))
+        saveButton.setIcon(PResource.defaultIcon(Parapluie.Icon_Save_Svg))
         saveButton.setFixedSize(36, 36)
         saveButton.pressed.connect(self.saveData)
 
         runButton = QToolButton()
         runButton.setText("Run")
         runButton.setToolTip("Run (Ctrl+R)")
-        runButton.setIcon(PResource.invertIcon(Parapluie.Icon_Play_Button_Svg))
+        runButton.setIcon(PResource.defaultIcon(Parapluie.Icon_Play_Button_Svg))
         runButton.setFixedSize(36, 36)
         runButton.pressed.connect(self.run)
 
-        self.category = PLabelEdit()
-        self.category.setFixedHeight(36)
-        self.category.setMaximumHeight(36)
-        self.category.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        self.category.setStyleSheet("QLabel{color:white; font-size:16px}")
-        self.category.setText("<unknown>")
+        self.category = self.param.categories
 
         self.title = PLabelEdit()
         self.title.setFixedHeight(36)
         self.title.setMaximumHeight(36)
-        self.title.setStyleSheet("QLabel{color:white; font-size:16px}")
+        self.title.setStyleSheet("QLabel{color:#424242; font-size:16px}")
         self.title.setText("Untitled")
 
         tool = QHBoxLayout()
-        tool.addWidget(self.category)
+        tool.addSpacing(10)
         tool.addWidget(self.title)
         tool.addStretch()
         tool.addWidget(clearButton)
@@ -70,49 +69,19 @@ class RequestWorkspace(QWidget):
         widget = QWidget()
         widget.setLayout(tool)
         widget.layout().setContentsMargins(8, 4, 8, 4)
-        widget.setObjectName(Parapluie.Object_Header)
+        widget.setObjectName(Parapluie.Object_TopHeader)
         widget.setMaximumHeight(44)
-
-        self.param = RequestParam()
-        self.param.alert.connect(lambda a, b, c, d: self.alert.emit(a, b, c, d))
-
-        h1 = ItemHeader(Parapluie.Object_ItemHeader2)
-        h1.setLabel("Request")
-
-        paramLayout = QVBoxLayout()
-        paramLayout.setSpacing(0)
-        paramLayout.addWidget(h1)
-        paramLayout.addWidget(self.param)
-
-        paramWidget = QWidget()
-        paramWidget.setObjectName(Parapluie.Object_Raised)
-        paramWidget.setLayout(paramLayout)
-
-        self.result = RequestResult()
-        self.result.alert.connect(lambda a, b, c, d: self.alert.emit(a, b, c, d))
-
-        temp = QVBoxLayout()
-        temp.addWidget(self.result)
-        temp.setContentsMargins(10, 0, 10, 0)
-
-        h2 = ItemHeader(Parapluie.Object_ItemHeader2)
-        h2.setLabel("Result")
-
-        resultLayout = QVBoxLayout()
-        resultLayout.addWidget(h2)
-        resultLayout.addLayout(temp)
-
-        resultWidget = QWidget()
-        resultWidget.setObjectName(Parapluie.Object_Raised)
-        resultWidget.setLayout(resultLayout)
-        resultWidget.setContentsMargins(0, 0, 0, 10)
+        PFunction.applyShadow(widget)
 
         workLayout = QVBoxLayout()
-        workLayout.addWidget(paramWidget)
-        workLayout.addWidget(resultWidget)
+        workLayout.addWidget(self.param)
+        workLayout.addSpacing(20)
+        workLayout.addWidget(self.result)
+        workLayout.setContentsMargins(8, 8, 8, 8)
 
-        workspace = QWidget()
+        workspace = PWidget()
         workspace.setLayout(workLayout)
+        workspace.setObjectName(Parapluie.Object_Raised)
 
         scroll = QScrollArea()
         scroll.setWidget(workspace)
@@ -120,12 +89,20 @@ class RequestWorkspace(QWidget):
         scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
         layout = QVBoxLayout()
-        layout.setSpacing(0)
+        layout.setSpacing(10)
         layout.setAlignment(Qt.AlignTop)
         layout.addWidget(widget)
         layout.addWidget(scroll)
+        layout.setContentsMargins(0, 0, 0, 10)
 
-        self.setLayout(layout)
+        outer = PWidget()
+        outer.setObjectName(Parapluie.Object_TopHeader)
+        outer.setLayout(layout)
+
+        outerLayout = QHBoxLayout()
+        outerLayout.addWidget(outer)
+
+        self.setLayout(outerLayout)
         self.layout().setContentsMargins(0, 5, 5, 10)
 
         self.currentFile: XFile = None
@@ -202,7 +179,7 @@ class RequestWorkspace(QWidget):
         if xash.getCategory() != "":
             self.category.setText(xash.getCategory())
         else:
-            self.category.setText("<uncategorized>")
+            self.category.setText("")
 
     def clearAll(self):
         self.result.setResponse(None)
@@ -213,7 +190,7 @@ class RequestWorkspace(QWidget):
         mCompleterItemDelegate = QStyledItemDelegate(self)
         completer.popup().setItemDelegate(mCompleterItemDelegate)
         Utilities.Style.applyStyle(completer.popup())
-        self.category.edit.setCompleter(completer)
+        self.category.setCompleter(completer)
 
     def saveData(self):
         if self.currentFile is not None:
@@ -224,10 +201,7 @@ class RequestWorkspace(QWidget):
             self.currentFile.unsavedData = data
 
             name = self.title.text()
-            if self.category.text().startswith("<") and self.category.text().endswith(">"):
-                category = ""
-            else:
-                category = self.category.text()
+            category = self.category.text()
             description = self.currentFile.unsavedData.parseConfig().description()
             description = " ".join(description.split())
 

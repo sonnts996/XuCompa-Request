@@ -1,16 +1,22 @@
 from PyQt5 import QtGui
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QLabel, QVBoxLayout, QHBoxLayout, QSizePolicy
 
-from xu.compa.Parapluie import Parapluie, PHolder, PWidget, PClose
+from xu.compa.Parapluie import Parapluie, PHolder, PWidget, PClose, PFunction
 
 
 class ItemHolder(PHolder):
+    colors = ["#B86878", "#E57373", "#F0C0C8", "#F17657",
+              "#FFB74D", "#FFCA28", "#6FCF97", "#66BB6A",
+              "#4B894E", "#64B5F6", "#5C6BC0", "#386090",
+              "#6E8CC8", "#9575CD", "#FFFFFF", "#242424"]
 
-    def __init__(self, parent: PWidget):
+    def __init__(self, parent: PWidget, special=False):
         super().__init__()
         self.setObjectName(Parapluie.Object_Item)
+        self.special = special
+        if special:
+            PFunction.applyShadow(self)
         self.parent = parent
         self.title = QLabel()
         self.category = QLabel()
@@ -20,16 +26,16 @@ class ItemHolder(PHolder):
         self.closeButton.setFixedSize(24, 24)
         self.closeButton.pressed.connect(self.closeRequest)
 
-        label = QLabel()
-
-        icon = QIcon(":/icon/label.svg")
-        pixmap = icon.pixmap(QSize(12, 12))
-        label.setPixmap(pixmap)
-        label.setFixedHeight(24)
+        # label = QLabel()
+        #
+        # icon = QIcon(":/icon/label.svg")
+        # pixmap = icon.pixmap(QSize(12, 12))
+        # label.setPixmap(pixmap)
+        # label.setFixedHeight(24)
 
         closeLayout = QHBoxLayout()
         closeLayout.setAlignment(Qt.AlignTop)
-        closeLayout.addWidget(label, alignment=Qt.AlignLeft)
+        # closeLayout.addWidget(label, alignment=Qt.AlignLeft)
         closeLayout.addWidget(self.category, alignment=Qt.AlignLeft)
         closeLayout.addStretch()
         closeLayout.addWidget(self.closeButton, alignment=Qt.AlignRight)
@@ -83,6 +89,19 @@ class ItemHolder(PHolder):
         self.category.setVisible(category != "")
         self.category.setToolTip(category)
 
+        c = ord(category[0]) % 15
+        self.category.setStyleSheet("""
+        #Item #Category {
+            border: none;
+            background: %s;
+            border-radius: 5px;
+            color: #FFFFFF;
+            font-weight: bold;
+            font-size: 11px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }""" % self.colors[c])
+
     def setDescription(self, t):
         self.desc = t
         self.parentResized()
@@ -91,6 +110,8 @@ class ItemHolder(PHolder):
 
     def setSelected(self, selected):
         self.setEnabled(not selected)
+        if self.graphicsEffect() is not None:
+            self.graphicsEffect().setEnabled(not selected)
         self.closeButton.setVisible(not selected)
 
     def setData(self, data):
@@ -115,7 +136,7 @@ class ItemHolder(PHolder):
         self.category.setText(self.updateText(self.cate, self.parent.width(), 7))
         self.title.setText(self.updateText(self.ttl, self.parent.width(), 10))
 
-        self.setFixedWidth(self.parent.width() - 15)
+        self.setFixedWidth(self.parent.width() - (25 if self.special else 15))
 
     def updateText(self, text, width, unit):
         if " " not in text:
