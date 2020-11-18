@@ -81,7 +81,7 @@ class RequestParam(QSplitter):
         lLeft.setAlignment(Qt.AlignTop)
         lLeft.addLayout(l1)
         lLeft.addLayout(l2)
-        lLeft.addSpacing(10)
+        lLeft.addSpacing(15)
         lLeft.addWidget(self.tab)
 
         wLeft = PWidget()
