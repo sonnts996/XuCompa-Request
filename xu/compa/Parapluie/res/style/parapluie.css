@@ -180,10 +180,6 @@ QScrollBar::up-arrow, QScrollBar::down-arrow {
     outline: none;
 }
 
-QScrollBar::corner {
-    background: white;
-}
-
 QTreeView,
 QListView,
 QTableView,

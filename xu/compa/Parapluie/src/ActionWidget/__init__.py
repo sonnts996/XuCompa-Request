@@ -10,4 +10,3 @@ from xu.compa.Parapluie.src.ActionWidget.PLabelEdit import PLabelEdit
 from xu.compa.Parapluie.src.ActionWidget.PItemDelegate import PItemDelegate
 from xu.compa.Parapluie.src.ActionWidget.PClose import PClose
 from xu.compa.Parapluie.src.ActionWidget.PEditor import PEditor
-from xu.compa.Parapluie.src.ActionWidget.PCorner import PCorner
