@@ -4,6 +4,7 @@ from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QVBoxLayout, QLineEdit, QHBoxLayout, QListWidget, QToolButton, QFileDialog
 
 from xu.compa.Parapluie import PResource, PWidget
+from xu.compa.Parapluie.src import PFunction
 from xu.src.python.JsonViewer.Adapter import JsonAdapter
 from xu.src.python.Model import XFile
 from xu.src.python.Model.ItemModel import ItemModel
@@ -45,15 +46,13 @@ class JSONNavigation(PWidget):
         self.listDataWidget.setSpacing(3)
 
         layout = QVBoxLayout()
-        layout.setContentsMargins(8, 8, 8, 8)
+        layout.setContentsMargins(8, 8, 0, 8)
         layout.addLayout(topBar)
         layout.addSpacing(8)
         layout.addWidget(self.listDataWidget)
 
-        self.setObjectName(Parapluie.Object_Raised)
-        self.setFixedWidth(300)
+        self.setObjectName(Parapluie.Object_Raised_Off)
         self.setLayout(layout)
-        # PFunction.applyShadow(self)
 
         self.dataList = []
         self.dataSource = []

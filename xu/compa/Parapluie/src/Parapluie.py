@@ -12,6 +12,7 @@ Object_Editor_Header: Final[str] = "Editor_Header"
 Object_Editor_Flat: Final[str] = "Editor_Flat"
 Object_QSplitter: Final[str] = "QSplitter"
 Object_Table: Final[str] = "Table"
+Object_BorderPane: Final[str] = "BorderPane"
 
 # Sticky Window
 Object_StickyWindow: Final[str] = "StickyWindow"

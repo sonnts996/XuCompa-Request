@@ -22,7 +22,7 @@ class JsonAdapter(PListAdapter):
     def getWidget(self, position: int, w: ItemHolder = None):
         i: ItemModel = self.item(position)
         if isinstance(i.file, XFile):
-            w = ItemHolder(self.parent, True)
+            w = ItemHolder(self.parent)
             x: XFile = i.file
             w.setData(x)
             w.setText(x.name()[0], x.parent(), x.getPath(), i.selected > 0)

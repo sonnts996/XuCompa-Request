@@ -1,6 +1,7 @@
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QSplitter
 
+from xu.compa.Parapluie import Parapluie
 from xu.src.python.Request import RequestNavigation, RequestWorkspace
 
 
@@ -27,6 +28,7 @@ class RequestViewer(QSplitter):
         self.setChildrenCollapsible(False)
         self.setStretchFactor(0, 1)
         self.setStretchFactor(1, 5)
+        self.setObjectName(Parapluie.Object_QSplitter)
 
         self.leftWidget.newFile()
         self.workspace.setCategories(self.leftWidget.categories)

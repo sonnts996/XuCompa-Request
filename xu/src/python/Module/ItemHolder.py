@@ -136,7 +136,7 @@ class ItemHolder(PHolder):
         self.category.setText(self.updateText(self.cate, self.parent.width(), 7))
         self.title.setText(self.updateText(self.ttl, self.parent.width(), 10))
 
-        self.setFixedWidth(self.parent.width() - (25 if self.special else 15))
+        self.setFixedWidth(self.parent.width() - (23 if self.special else 15))
 
     def updateText(self, text, width, unit):
         if " " not in text:

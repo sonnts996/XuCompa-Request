@@ -5,11 +5,11 @@ import os
 
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QCursor
-from PyQt5.QtWidgets import QToolButton, QHBoxLayout, QVBoxLayout, QWidget, QApplication, QScrollArea, QSizePolicy, \
-    QCompleter, QStyledItemDelegate
+from PyQt5.QtWidgets import QToolButton, QHBoxLayout, QVBoxLayout, QWidget, QApplication, QScrollArea, QCompleter, \
+    QStyledItemDelegate
 
 import xu.src.python.Request.HTTP.HTTPRequest as Request
-from xu.compa.Parapluie import PResource, Parapluie, PLabelEdit, PFunction, PWidget
+from xu.compa.Parapluie import PResource, Parapluie, PLabelEdit, PFunction, PWidget, PCorner
 from xu.compa.xhash import XashHelp
 from xu.src.python import Utilities
 from xu.src.python.Model.XFile import XFile

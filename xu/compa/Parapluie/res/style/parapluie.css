@@ -180,6 +180,10 @@ QScrollBar::up-arrow, QScrollBar::down-arrow {
     outline: none;
 }
 
+QScrollBar::corner {
+    background: white;
+}
+
 QTreeView,
 QListView,
 QTableView,
@@ -531,6 +535,24 @@ QTabWidget QSpinBox {
     background: white;
 }
 
+QSplitter {
+    background: white;
+}
+
+QSplitter::handle {
+    background: white;
+}
+
+QSplitter::handle:horizontal {
+    width: 5px;
+    image: url(":/icons/drag_horizontal.svg");
+}
+
+QSplitter::handle:vertical {
+    height: 5px;
+    image: url(":/icons//drag_vertical.svg");
+}
+
 /**
     custom object name
  */
@@ -788,16 +810,6 @@ QTabWidget QSpinBox {
     background: transparent;
 }
 
-#QSplitter::handle:horizontal {
-    width: 5px;
-    image: url(":/icons/drag_horizontal.svg");
-}
-
-#QSplitter::handle:vertical {
-    height: 5px;
-    image: url(":/icons//drag_vertical.svg");
-}
-
 #Editor {
     background: white;
     border: 1px solid #f0f0f0;
@@ -879,6 +891,11 @@ QTabWidget QSpinBox {
     background: white;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
+}
+
+#BorderPane {
+    background: white;
+    border-radius: 10px;
 }
 
 #ColorComboBox {
