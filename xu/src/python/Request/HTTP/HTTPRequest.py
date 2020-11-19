@@ -33,7 +33,10 @@ def call(config: APIConfig) -> APIResponse:
 
 
 def run(func, config: APIConfig):
-    url = config.parseLink().url() + config.api()
+    if config.parseLink().url() != "/":
+        url = config.parseLink().url() + config.api()
+    else:
+        url = config.api()
     param = config.param()
     body = config.body()
     header(config)
@@ -57,7 +60,7 @@ def run(func, config: APIConfig):
 
 
 def header(config: APIConfig):
-    if "Content-Type" not in config.header():
+    if "Content-Type" not in config.header() and config.bodyType() != "":
         config.header()["Content-Type"] = config.bodyType()
 
 

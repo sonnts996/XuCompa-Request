@@ -40,7 +40,7 @@ class RequestBody(PWidget):
         elif self.editor.editType == EditorType.Javascript:
             return self.xmlText.text(), BodyType.Javascript
         else:
-            return self.editor.text(), BodyType.Text
+            return self.editor.text(), BodyType.Text if self.editor.text() != "" or self.editor.text().isspace() else ""
 
     def setData(self, body, tpe):
         self.editor.setText(body)
