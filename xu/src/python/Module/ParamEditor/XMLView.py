@@ -9,7 +9,6 @@ import xu.src.python.Module.ParamEditor as ParamEditor
 from xu.src.python import Utilities
 
 
-
 class XMLView:
     def __init__(self, treeView, model):
         self.treeView: ParamEditor.ParamEditor = treeView
@@ -56,15 +55,15 @@ class XMLView:
         if data is not None:
             elem: Et.Element = data['item']
             if data['type'] == 'value':
-                elem.text = item.text()
+                elem.text = self.keyDecode(item.text())
             elif data['type'] == 'property-value':
                 if data['key'] is not None:
-                    elem.set(data['key'].text().replace('@', ''), item.text())
+                    elem.set(data['key'].text().replace('@', ''), self.keyDecode(item.text()))
             elif data['type'] == 'tag':
-                elem.tag = item.text()
+                elem.tag = self.keyDecode(item.text(), True)
             elif data['type'] == 'property':
                 key = data['key']
-                text: str = item.text()
+                text: str = self.keyDecode(item.text(), True)
                 if text.startswith('@'):
                     text = text[1:]
                 else:
@@ -77,8 +76,11 @@ class XMLView:
             self.treeView.pushSignal()
             self.flow.add(copy.deepcopy(self.xmlData))
 
-    def keyDecode(self, value):
-        pass
+    def keyDecode(self, value, isKey=False):
+        if isKey:
+            return value.replace(" ", "").replace("<", "").replace(">", "")
+        else:
+            return value.replace("<", "").replace(">", "")
 
     def getItemData(self, item, tpe, key=None, parent=None):
         return {"item": item, 'type': tpe, 'key': key, 'parent': parent}
@@ -88,8 +90,18 @@ class XMLView:
 
         isItem = len(indexes) > 0
         data = None
+        item = None
         if isItem:
             index = indexes[0]
+            x = position.x()
+            for i in indexes:
+                point = self.treeView.visualRect(i)
+                iw = point.width()
+                ix = point.x()
+
+                if ix < x < (ix + iw):
+                    index = i
+                    break
             item = self.model.itemFromIndex(index)
             data = item.data()
 
@@ -105,14 +117,14 @@ class XMLView:
             par = None
 
         if tpe is not None and tpe.startswith('property'):
-            self.createMenu(position, 1, elem, prop, par)
+            self.createMenu(position, 1, elem, prop, par, item)
         else:
             if par is None:
-                self.createMenu(position, 2, elem, prop, par)
+                self.createMenu(position, 2, elem, prop, par, item)
             else:
-                self.createMenu(position, 0, elem, prop, par)
+                self.createMenu(position, 0, elem, prop, par, item)
 
-    def createMenu(self, position, tpe, elem, prop, par):
+    def createMenu(self, position, tpe, elem, prop, par, item):
         # global
         undoAction = QAction('Undo', self.treeView)
         undoAction.setEnabled(not self.flow.isEnd())
@@ -123,6 +135,8 @@ class XMLView:
         clearAll = QAction('Clear table', self.treeView)
 
         # delete
+        copyTextAction = QAction('Copy text', self.treeView)
+        pasteTextAction = QAction("Paste text", self.treeView)
         deleteTagAction = QAction('Delete tag', self.treeView)
         deletePropertyAction = QAction('Delete property', self.treeView)
 
@@ -159,10 +173,14 @@ class XMLView:
 
         if self.treeView.editable:
             if tpe == 0:  # tag
+                menu.addAction(copyTextAction)
+                menu.addAction(pasteTextAction)
                 menu.addAction(duplicateAction)
                 menu.addMenu(addMenu)
                 menu.addAction(deleteTagAction)
             elif tpe == 1:  # property
+                menu.addAction(copyTextAction)
+                menu.addAction(pasteTextAction)
                 menu.addAction(addPropertyAction)
                 if prop is not None:
                     menu.addAction(deletePropertyAction)
@@ -172,7 +190,9 @@ class XMLView:
                 else:
                     menu.addAction(addChildAction)
                     menu.addAction(addPropertyAction)
-
+        else:
+            if tpe == 0 or tpe == 1:
+                menu.addAction(copyTextAction)
         action = menu.exec_(self.treeView.viewport().mapToGlobal(position))
 
         if action == undoAction:
@@ -185,6 +205,10 @@ class XMLView:
             self.actionPasteAsXML()
         elif action == clearAll:
             self.actionClearAll()
+        elif action == copyTextAction:
+            self.actionCopyText(item)
+        elif action == pasteTextAction:
+            self.actionPasteText(item)
         elif action == duplicateAction:
             self.actionDuplicate(elem, par)
         elif action == deleteTagAction:
@@ -207,6 +231,19 @@ class XMLView:
             self.xmlData = self.flow.next()
             self.treeView.refresh()
             self.treeView.pushSignal()
+
+    def actionCopyText(self, item: QStandardItem):
+        if item is not None:
+            text = item.text()
+            import clipboard
+            clipboard.copy(text)
+
+    def actionPasteText(self, item: QStandardItem):
+        import clipboard
+        text = clipboard.paste()
+        if item is not None:
+            if item.isEditable():
+                item.setText(text)
 
     def actionCopyAsXML(self):
         try:

@@ -1,6 +1,7 @@
 import copy
 import logging
 
+from PyQt5.QtCore import QPoint
 from PyQt5.QtGui import QStandardItem
 from PyQt5.QtWidgets import QMenu, QAction
 
@@ -100,13 +101,23 @@ class JSONView:
         else:
             return text
 
-    def openMenu(self, position):
+    def openMenu(self, position: QPoint):
         indexes = self.treeView.selectedIndexes()
 
         isItem = len(indexes) > 0
         data = None
+        item = None
         if isItem:
             index = indexes[0]
+            x = position.x()
+            for i in indexes:
+                point = self.treeView.visualRect(i)
+                iw = point.width()
+                ix = point.x()
+
+                if ix < x < (ix + iw):
+                    index = i
+                    break
             item = self.model.itemFromIndex(index)
             data = item.data()
 
@@ -121,25 +132,33 @@ class JSONView:
 
         if tpe == 'index':
             if ite.isObject():
-                self.createMenu(position, 0, par, ite)
+                self.createMenu(position, 0, par, ite, item)
             else:
-                self.createMenu(position, 1, par, ite)
+                self.createMenu(position, 1, par, ite, item)
         else:
             if isinstance(ite, Jso.JKey) or isinstance(ite, Jso.JIndex):
                 if ite.isObject():
-                    self.createMenu(position, 2, par, ite)
+                    self.createMenu(position, 2, par, ite, item)
                 else:
-                    self.createMenu(position, 1, par, ite)
+                    self.createMenu(position, 1, par, ite, item)
             else:
-                self.createMenu(position, 3, par, ite)
+                self.createMenu(position, 3, par, ite, item)
 
-    def createMenu(self, position, tpe, par, obj):
+    def createMenu(self, position, tpe, par, obj, item):
         # global
+        undoAction = QAction('Undo', self.treeView)
+        undoAction.setEnabled(not self.flow.isEnd())
+        redoAction = QAction('Redo', self.treeView)
+        redoAction.setEnabled(not self.flow.isFirst())
         copyAsJSON = QAction('Copy as JSON', self.treeView)
+
         pasteAsJSON = QAction('Paste as JSON', self.treeView)
         clearAll = QAction('Clear table', self.treeView)
 
         # delete
+        copyTextAction = QAction('Copy text', self.treeView)
+        pasteTextAction = QAction("Paste text", self.treeView)
+
         deleteKeyAction = QAction('Delete key', self.treeView)
 
         # duplicate
@@ -184,37 +203,56 @@ class JSONView:
         Utilities.Style.applyStyle(menu)
         menu.addAction(copyAsJSON)
         if self.treeView.editable:
+            menu.addAction(undoAction)
+            menu.addAction(redoAction)
             menu.addAction(pasteAsJSON)
             menu.addAction(clearAll)
             menu.addSeparator()
 
         if self.treeView.editable:
             if tpe == 0:  # index
+                menu.addAction(copyTextAction)
+                menu.addAction(pasteTextAction)
                 menu.addAction(duplicateAction)
                 if self.treeView.paramType != ParamEditor.ParamType.Param:
                     menu.addMenu(insertKeyMenu)
                 menu.addMenu(addKeyMenu)
                 menu.addAction(deleteKeyAction)
             elif tpe == 1:  # key
+                menu.addAction(copyTextAction)
+                menu.addAction(pasteTextAction)
                 if obj.isEmpty() and self.treeView.paramType != ParamEditor.ParamType.Param:
                     menu.addMenu(insertKeyMenu)
                 menu.addMenu(addKeyMenu)
                 menu.addAction(deleteKeyAction)
             elif tpe == 2:  # obj
+                menu.addAction(copyTextAction)
+                menu.addAction(pasteTextAction)
                 if self.treeView.paramType != ParamEditor.ParamType.Param:
                     menu.addMenu(insertKeyMenu)
                 menu.addMenu(addKeyMenu)
                 menu.addAction(deleteKeyAction)
             else:  # table
                 menu.addMenu(addKeyMenu)
+        else:
+            if tpe == 0 or tpe == 1 or tpe == 2:
+                menu.addAction(copyTextAction)
         action = menu.exec_(self.treeView.viewport().mapToGlobal(position))
 
-        if action == copyAsJSON:
+        if action == undoAction:
+            self.flowAction(1)
+        elif action == redoAction:
+            self.flowAction(0)
+        elif action == copyAsJSON:
             self.actionCopyAsJSON()
         elif action == pasteAsJSON:
             self.actionPasteAsJSON()
         elif action == clearAll:
             self.actionClearAll()
+        elif action == copyTextAction:
+            self.actionCopyText(item)
+        elif action == pasteTextAction:
+            self.actionPasteText(item)
         elif action == deleteKeyAction:
             self.actionDelete(par, obj)
         elif action == duplicateAction:
@@ -239,6 +277,28 @@ class JSONView:
             self.actionAddList(obj.value, None)
 
     # Menu action
+    def flowAction(self, flow):
+        if flow == 1:
+            self.jsonData = self.flow.previous()
+            self.treeView.refresh()
+            self.treeView.pushSignal()
+        else:
+            self.jsonData = self.flow.next()
+            self.treeView.refresh()
+            self.treeView.pushSignal()
+
+    def actionCopyText(self, item: QStandardItem):
+        if item is not None:
+            text = item.text()
+            import clipboard
+            clipboard.copy(text)
+
+    def actionPasteText(self, item: QStandardItem):
+        import clipboard
+        text = clipboard.paste()
+        if item is not None:
+            if item.isEditable():
+                item.setText(text)
 
     def actionCopyAsJSON(self):
         text = Jso.toString(self.jsonData)

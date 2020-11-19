@@ -34,11 +34,11 @@ class RequestBody(PWidget):
         if self.editor.editType == EditorType.JSON:
             return self.editor.text(), BodyType.JSON
         elif self.editor.editType == EditorType.XML:
-            return self.jsonEditor.text(), BodyType.XML
+            return self.editor.text(), BodyType.XML
         elif self.editor.editType == EditorType.HTML:
-            return self.xmlText.text(), BodyType.HTML
+            return self.editor.text(), BodyType.HTML
         elif self.editor.editType == EditorType.Javascript:
-            return self.xmlText.text(), BodyType.Javascript
+            return self.editor.text(), BodyType.Javascript
         else:
             return self.editor.text(), BodyType.Text if self.editor.text() != "" or self.editor.text().isspace() else ""
 
