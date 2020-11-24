@@ -3,7 +3,7 @@ import logging
 
 import requests
 
-from xu.src.python.Request.Model import APIResponse, APIConfig, APIAnalysis
+from xu.src.python.Request.Model import APIResponse, APIConfig, APIAnalysis, BodyType
 
 
 # GET
@@ -33,13 +33,26 @@ def call(config: APIConfig) -> APIResponse:
 
 
 def run(func, config: APIConfig):
+    header(config)
+
     if config.parseLink().url() != "/":
         url = config.parseLink().url() + config.api()
     else:
         url = config.api()
     param = config.param()
-    body = config.body()
-    header(config)
+    if "Content-Type" in config.header():
+        tpe = BodyType.getContentType(config.header()["Content-Type"])
+        if tpe is not None:
+            try:
+                body = config.body().encode(tpe)
+            except Exception as ex:
+                logging.exception(ex)
+                body = config.body().encode('utf-8')
+        else:
+            body = config.body().encode('utf-8')
+    else:
+        body = config.body().encode('utf-8')
+
     try:
         if param != {} or param != "":
             if body != "" or body != {}:
